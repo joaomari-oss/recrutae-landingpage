@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Busca de Candidatos — Recrutaê</title>
+  <meta name="description" content="Responda algumas perguntas e nossa IA mapeia os candidatos ideais para a sua vaga. 100% gratuito.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="icon" href="assets/logos/favicon-square.png" type="image/png">
+  <style>
+    /* =========================================================
+       BUSCA DE CANDIDATOS — PAGE + WIZARD STYLES
+       ========================================================= */
+
+    /* --- Entry page --- */
+    .busca-hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+    .busca-hero::before {
+      content: '';
+      position: absolute;
+      top: -180px; right: -180px;
+      width: 580px; height: 580px;
+      background: radial-gradient(circle, rgba(245,185,20,.13) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .busca-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -140px;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(245,185,20,.06) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .busca-hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 32px;
+    }
+    .busca-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,185,20,.1);
+      border: 1px solid rgba(245,185,20,.22);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      margin-bottom: 32px;
+    }
+    .busca-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse-g 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-g {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.45; transform:scale(1.35); }
+    }
+    .busca-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -.03em;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+    .busca-title em { font-style: normal; color: var(--gold); }
+    .busca-sub {
+      font-size: 18px;
+      color: rgba(245,240,232,.5);
+      line-height: 1.6;
+      max-width: 540px;
+      margin: 0 auto 48px;
+    }
+    .busca-start-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 44px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background .22s ease, transform .22s ease, box-shadow .22s ease;
+    }
+    .busca-start-btn:hover {
+      background: var(--gold-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 44px rgba(245,185,20,.38);
+    }
+    .busca-start-btn:hover svg { transform: translateX(4px); }
+    .busca-start-btn svg { transition: transform .22s ease; }
+    /* Stat bar */
+    .busca-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-top: 44px;
+    }
+    .busca-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 36px;
+      border-right: 1px solid rgba(245,185,20,.13);
+    }
+    .busca-stat:last-child { border-right: none; }
+    .busca-stat-val {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: -.03em;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .busca-stat-lbl {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,.3);
+    }
+
+    /* --- How it works — editorial, matches main site process section --- */
+    .how-it-works {
+      background: var(--cream);
+      padding: 100px 0;
+    }
+    .how-header {
+      margin-bottom: 64px;
+    }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--cream-dark);
+    }
+    @media (max-width: 768px) {
+      .how-steps { grid-template-columns: 1fr; }
+      .how-step  { border-right: none !important; border-bottom: 1px solid var(--cream-dark); }
+      .how-step:last-child { border-bottom: none; }
+    }
+    .how-step {
+      padding: 36px 32px 36px 0;
+      border-right: 1px solid var(--cream-dark);
+      position: relative;
+    }
+    .how-step:first-child { padding-left: 0; }
+    .how-step:last-child  { border-right: none; padding-right: 0; }
+    .how-step:not(:first-child) { padding-left: 32px; }
+    .how-step::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 0;
+      width: 40px; height: 3px;
+      background: var(--gold);
+    }
+    .how-step-num {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 800;
+      color: rgba(245,185,20,.15);
+      line-height: 1;
+      margin-bottom: -8px;
+      letter-spacing: -.04em;
+      display: block;
+    }
+    .how-step-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .how-step-title::after {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--gold);
+      margin-top: 10px;
+    }
+    .how-step-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* =========================================================
+       WIZARD OVERLAY
+       ========================================================= */
+    .wizard-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #080717;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .wizard-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Topbar */
+    .wiz-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      border-bottom: 1px solid rgba(245,240,232,.06);
+      flex-shrink: 0;
+      position: relative;
+    }
+    /* Thin gold progress line */
+    .wiz-top::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      height: 2px;
+      width: var(--wiz-progress, 12.5%);
+      background: var(--gold);
+      transition: width .45s cubic-bezier(.22,1,.36,1);
+      z-index: 1;
+    }
+    .wiz-logo { height: 26px; opacity: .8; }
+    .wiz-progress-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+    }
+    .wiz-dots { display: flex; gap: 6px; }
+    .wiz-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(245,240,232,.12);
+      transition: all .28s ease;
+    }
+    .wiz-dot.done   { background: rgba(245,185,20,.35); }
+    .wiz-dot.active { background: var(--gold); transform: scale(1.4); }
+    .wiz-step-lbl {
+      font-size: 11px;
+      color: rgba(245,240,232,.28);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .wiz-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(245,240,232,.35);
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color .2s;
+      border-radius: 50%;
+    }
+    .wiz-close:hover { color: var(--cream); }
+
+    /* Body */
+    .wiz-body {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 48px 24px 80px;
+    }
+
+    /* Steps */
+    .wiz-step {
+      display: none;
+      width: 100%;
+      max-width: 560px;
+      animation: stepIn .35s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .wiz-step.active { display: block; }
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Gold accent line before each step */
+    .wiz-step-accent {
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--gold);
+      opacity: .55;
+      margin-bottom: 20px;
+    }
+
+    .step-overline {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(245,185,20,.5);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .step-q {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 3.5vw, 30px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -.02em;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .step-hint {
+      font-size: 13px;
+      color: rgba(245,240,232,.32);
+      line-height: 1.65;
+      margin-bottom: 36px;
+      font-style: italic;
+    }
+
+    /* Fields */
+    .wiz-field { margin-bottom: 28px; }
+    .wiz-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,.3);
+      margin-bottom: 10px;
+    }
+    .wiz-input, .wiz-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(245,240,232,.12);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 16px;
+      padding: 12px 0;
+      outline: none;
+      transition: border-color .22s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+    .wiz-input::placeholder, .wiz-textarea::placeholder { color: rgba(245,240,232,.18); }
+    .wiz-input:focus, .wiz-textarea:focus { border-bottom-color: var(--gold); }
+    .wiz-input.error, .wiz-textarea.error { border-bottom-color: rgba(239,68,68,.7); }
+    .wiz-textarea { min-height: 110px; resize: none; line-height: 1.7; }
+    .wiz-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 520px) { .wiz-row { grid-template-columns: 1fr; } }
+
+    .field-err {
+      font-size: 12px;
+      color: #ef4444;
+      margin-top: 5px;
+      display: none;
+    }
+    .field-err.visible { display: block; }
+
+    /* Buttons */
+    .wiz-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .btn-wiz-next {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 14px 30px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background .22s, transform .22s, box-shadow .22s;
+      letter-spacing: .01em;
+    }
+    .btn-wiz-next:hover {
+      background: var(--gold-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(245,185,20,.28);
+    }
+    .btn-wiz-next:disabled {
+      opacity: .38;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-wiz-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 14px 18px;
+      background: transparent;
+      color: rgba(245,240,232,.38);
+      font-family: var(--font-body);
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .btn-wiz-back:hover { color: var(--cream); }
+    .btn-wiz-skip {
+      font-size: 13px;
+      color: rgba(245,240,232,.25);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px 4px;
+      transition: color .2s;
+    }
+    .btn-wiz-skip:hover { color: rgba(245,240,232,.5); }
+
+    /* Video step */
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: rgba(245,240,232,.03);
+      border: 1px solid rgba(245,240,232,.08);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    #videoPreview {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+      display: block;
+    }
+    .video-perm {
+      position: absolute; inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: rgba(245,240,232,.3);
+      text-align: center;
+      padding: 24px;
+    }
+    .video-perm p { font-size: 13px; line-height: 1.5; }
+    .rec-ind {
+      position: absolute;
+      top: 14px; left: 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(0,0,0,.55);
+      padding: 5px 11px;
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .rec-ind.on { opacity: 1; }
+    .rec-dot {
+      width: 8px; height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: blink 1s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; }
+      50%      { opacity:.15; }
+    }
+    .rec-txt {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: white;
+    }
+    .waveform {
+      display: flex; align-items: center; gap: 3px; height: 20px;
+    }
+    .waveform span {
+      width: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      animation: wv .8s ease-in-out infinite;
+    }
+    .waveform span:nth-child(1) { animation-delay:0s; }
+    .waveform span:nth-child(2) { animation-delay:.12s; }
+    .waveform span:nth-child(3) { animation-delay:.24s; }
+    .waveform span:nth-child(4) { animation-delay:.12s; }
+    .waveform span:nth-child(5) { animation-delay:0s; }
+    @keyframes wv {
+      0%,100% { height:4px; }
+      50%      { height:18px; }
+    }
+    .rec-timer {
+      position: absolute;
+      top: 14px; right: 14px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      background: rgba(0,0,0,.55);
+      padding: 3px 10px;
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .rec-timer.on { opacity: 1; }
+    .vid-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .btn-record {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: #ef4444;
+      color: white;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+    .btn-record:hover { background: #dc2626; transform: translateY(-1px); }
+    .btn-record.recording {
+      background: rgba(239,68,68,.12);
+      color: #ef4444;
+      border: 1px solid rgba(239,68,68,.5);
+    }
+    .btn-record.recording:hover { background: rgba(239,68,68,.2); }
+    .btn-playback {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 20px;
+      background: transparent;
+      color: rgba(245,240,232,.5);
+      font-family: var(--font-body);
+      font-size: 13px;
+      border: 1px solid rgba(245,240,232,.14);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-playback:hover { border-color: rgba(245,240,232,.35); color: var(--cream); }
+    .rec-badge {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px;
+      color: rgba(245,240,232,.4);
+    }
+    .rec-badge svg { color: #22c55e; }
+    .fallback-note { font-size: 12px; color: rgba(245,240,232,.22); margin-top: 10px; line-height: 1.5; }
+
+    /* Processing */
+    .proc-wrap { text-align: center; padding: 40px 0; }
+    .proc-spinner {
+      width: 52px; height: 52px;
+      border: 2px solid rgba(245,240,232,.08);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .85s linear infinite;
+      margin: 0 auto 36px;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .proc-title {
+      font-family: var(--font-display);
+      font-size: 26px; font-weight: 700;
+      color: var(--cream); margin-bottom: 10px;
+    }
+    .proc-msg {
+      font-size: 14px;
+      color: rgba(245,240,232,.38);
+      height: 20px;
+      transition: opacity .35s;
+    }
+
+    /* Results */
+    .res-wrap { text-align: center; padding: 20px 0; }
+    .res-check {
+      width: 60px; height: 60px;
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      animation: checkIn .45s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    @keyframes checkIn {
+      from { transform:scale(.5); opacity:0; }
+      to   { transform:scale(1); opacity:1; }
+    }
+    .res-pre {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(245,240,232,.3); margin-bottom: 14px;
+    }
+    .res-count-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 8px; margin-bottom: 6px;
+    }
+    .res-count {
+      font-family: var(--font-display);
+      font-size: clamp(60px, 12vw, 110px);
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: -.03em;
+    }
+    .res-count-suffix {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 4vw, 36px);
+      font-weight: 700;
+      color: rgba(245,240,232,.4);
+    }
+    .res-headline {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .res-job-tag {
+      display: inline-block;
+      background: rgba(245,185,20,.1);
+      border: 1px solid rgba(245,185,20,.2);
+      color: var(--gold);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: .07em;
+      padding: 6px 14px;
+      margin-bottom: 28px;
+    }
+    .res-divider { width: 36px; height: 1px; background: rgba(245,185,20,.25); margin: 0 auto 28px; }
+    .res-cta-box {
+      background: rgba(245,240,232,.025);
+      border: 1px solid rgba(245,240,232,.07);
+      padding: 28px 32px;
+      margin-bottom: 16px;
+    }
+    .res-cta-title {
+      font-family: var(--font-display);
+      font-size: 17px; font-weight: 700;
+      color: var(--cream); margin-bottom: 8px;
+    }
+    .res-cta-desc {
+      font-size: 13px;
+      color: rgba(245,240,232,.38);
+      line-height: 1.65;
+      margin-bottom: 22px;
+    }
+    .btn-wapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 15px 34px;
+      background: #25D366;
+      color: white;
+      font-family: var(--font-body);
+      font-size: 14px; font-weight: 700;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, transform .2s, box-shadow .2s;
+    }
+    .btn-wapp:hover {
+      background: #1ebe5d;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 26px rgba(37,211,102,.28);
+    }
+    .res-footnote { font-size: 11px; color: rgba(245,240,232,.18); margin-top: 14px; }
+
+    @media (max-width: 600px) {
+      .wiz-top { padding: 14px 18px; }
+      .wiz-body { padding: 28px 16px 60px; }
+      .wiz-progress-center { display: none; }
+      .res-cta-box { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar transparent on-dark" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/logos/Recrutae horizontal 2026.png" alt="Recrutaê" class="logo-light" loading="eager">
+        <img src="assets/logos/Principal_Recrutae horizontal 2026.png" alt="Recrutaê" class="logo-dark" loading="eager">
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item has-dropdown">
+          <a href="#" class="nav-link">Sou empresa <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="dropdown">
+            <li><a href="recrutamento-selecao.html">Recrutamento e Seleção</a></li>
+            <li><a href="alocacao.html">Alocação</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="sou-candidato.html" class="nav-link">Sou candidato</a></li>
+        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="nav-item has-dropdown">
+          <a href="#" class="nav-link">Indústrias <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="dropdown dropdown-wide">
+            <li><a href="industria-template.html?ind=tecnologia">Tecnologia</a></li>
+            <li><a href="industria-template.html?ind=telecom">Telecom</a></li>
+            <li><a href="industria-template.html?ind=midia">Mídia</a></li>
+            <li><a href="industria-template.html?ind=varejo">Varejo</a></li>
+            <li><a href="industria-template.html?ind=bens-consumo">Bens de Consumo</a></li>
+            <li><a href="industria-template.html?ind=logistica">Logística</a></li>
+            <li><a href="industria-template.html?ind=servicos-financeiros">Serviços Financeiros</a></li>
+            <li><a href="industria-template.html?ind=banking">Banking</a></li>
+          </ul>
+        </li>
+      </ul>
+      <a href="busca-candidatos.html" class="btn-cta-nav">Começar busca</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+  <main>
+    <!-- HERO -->
+    <section class="busca-hero">
+      <div class="hero-glow-beam" aria-hidden="true"></div>
+      <div class="busca-hero-inner container">
+        <div class="busca-badge">
+          <span class="busca-badge-dot"></span>
+          Gratuito &middot; Sem compromisso
+        </div>
+        <h1 class="busca-title">
+          Quantos candidatos qualificados<br>existem para <em>a sua vaga?</em>
+        </h1>
+        <p class="busca-sub">
+          Conte sobre a posição em 5 minutos. Nossa equipe mapeia os perfis mais compatíveis da nossa base e entra em contato em até 24 horas.
+        </p>
+        <button class="busca-start-btn" id="startWizardBtn">
+          Descobrir agora
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="busca-stats">
+          <div class="busca-stat">
+            <span class="busca-stat-val">5 min</span>
+            <span class="busca-stat-lbl">Para preencher</span>
+          </div>
+          <div class="busca-stat">
+            <span class="busca-stat-val">24h</span>
+            <span class="busca-stat-lbl">Para receber retorno</span>
+          </div>
+          <div class="busca-stat">
+            <span class="busca-stat-val">Grátis</span>
+            <span class="busca-stat-lbl">Sem compromisso</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+      <div class="container">
+        <div class="how-header animate-up">
+          <span class="label label-gold">como funciona</span>
+          <h2 class="section-title">Do briefing ao <em>candidato ideal.</em></h2>
+          <p class="section-sub">Sem reuniões intermináveis, sem briefings de 30 páginas. Só o essencial — e rápido.</p>
+        </div>
+        <div class="how-steps">
+          <div class="how-step animate-up">
+            <span class="how-step-num">01</span>
+            <h3 class="how-step-title">Você conta sobre a vaga</h3>
+            <p class="how-step-desc">Responda 7 perguntas objetivas sobre a posição — perfil técnico, comportamental, contexto e expectativas. Em até 5 minutos.</p>
+          </div>
+          <div class="how-step animate-up stagger-1">
+            <span class="how-step-num">02</span>
+            <h3 class="how-step-title">Mapeamos os candidatos</h3>
+            <p class="how-step-desc">Nossa equipe cruza o seu briefing com a base da Recrutaê e identifica os profissionais mais compatíveis com o perfil descrito.</p>
+          </div>
+          <div class="how-step animate-up stagger-2">
+            <span class="how-step-num">03</span>
+            <h3 class="how-step-title">Um consultor entra em contato</h3>
+            <p class="how-step-desc">Em até 24 horas, um especialista apresenta os perfis mapeados e, se fizer sentido, conduz o processo de seleção com você.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====================================================
+       WIZARD OVERLAY
+  ===================================================== -->
+  <div id="wizardOverlay" class="wizard-overlay">
+
+    <div class="wiz-top">
+      <img src="assets/logos/Recrutae horizontal 2026.png" alt="Recrutaê" class="wiz-logo">
+      <div class="wiz-progress-center" id="wizProgCenter">
+        <div class="wiz-dots" id="wizDots"></div>
+        <span class="wiz-step-lbl" id="wizLbl">Passo 1 de 8</span>
+      </div>
+      <button class="wiz-close" id="wizClose" aria-label="Fechar">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M4.5 4.5 13.5 13.5M13.5 4.5 4.5 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="wiz-body">
+
+      <!-- STEP: contact -->
+      <div class="wiz-step" id="step-contact">
+        <span class="wiz-step-accent"></span>
+        <span class="step-overline">Vamos começar</span>
+        <h2 class="step-q">Antes de tudo, como podemos te chamar?</h2>
+        <p class="step-hint">Vamos usar essas informações para conectar você ao consultor certo da Recrutaê.</p>
+
+        <div class="wiz-row">
+          <div class="wiz-field">
+            <label class="wiz-label" for="cName">Nome completo *</label>
+            <input class="wiz-input" id="cName" type="text" placeholder="João Silva" autocomplete="name">
+            <span class="field-err" id="cName-err">Campo obrigatório</span>
+          </div>
+          <div class="wiz-field">
+            <label class="wiz-label" for="cRole">Seu cargo *</label>
+            <input class="wiz-input" id="cRole" type="text" placeholder="Head de RH">
+            <span class="field-err" id="cRole-err">Campo obrigatório</span>
+          </div>
+        </div>
+        <div class="wiz-field">
+          <label class="wiz-label" for="cCompany">Empresa *</label>
+          <input class="wiz-input" id="cCompany" type="text" placeholder="Nome da empresa">
+          <span class="field-err" id="cCompany-err">Campo obrigatório</span>
+        </div>
+        <div class="wiz-row">
+          <div class="wiz-field">
+            <label class="wiz-label" for="cEmail">Email corporativo *</label>
+            <input class="wiz-input" id="cEmail" type="email" placeholder="joao@empresa.com" autocomplete="email">
+            <span class="field-err" id="cEmail-err">Email inválido</span>
+          </div>
+          <div class="wiz-field">
+            <label class="wiz-label" for="cPhone">WhatsApp *</label>
+            <input class="wiz-input" id="cPhone" type="tel" placeholder="(11) 99999-9999" autocomplete="tel">
+            <span class="field-err" id="cPhone-err">Campo obrigatório</span>
+          </div>
+        </div>
+        <div class="wiz-actions">
+          <button class="btn-wiz-next" id="nextContact">
+            Continuar
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP: q1 (video) -->
+      <div class="wiz-step" id="step-q1">
+        <span class="wiz-step-accent"></span>
+        <span class="step-overline">Pergunta 1 de 7</span>
+        <h2 class="step-q">Conta pra gente: quem é você, o que a sua empresa faz e por que essa contratação importa agora?</h2>
+        <p class="step-hint">Responda em vídeo — pode ser à vontade, sem roteiro. Cerca de 1 minuto está ótimo.</p>
+
+        <div class="video-wrap">
+          <video id="videoPreview" autoplay playsinline muted></video>
+          <div class="video-perm" id="vidPerm">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="2" y="9" width="22" height="18" rx="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M24 14.5 34 9v18l-10-5.5V14.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <p>Clique em "Iniciar gravação" para ativar câmera e microfone.</p>
+          </div>
+          <div class="rec-ind" id="recInd">
+            <div class="rec-dot"></div>
+            <span class="rec-txt">REC</span>
+            <div class="waveform">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="rec-timer" id="recTimer">0:00</div>
+        </div>
+
+        <div class="vid-controls" id="vidControls">
+          <button class="btn-record" id="recordBtn">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" fill="currentColor"/></svg>
+            Iniciar gravação
+          </button>
+          <button class="btn-playback" id="playBtn" style="display:none">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 2.5 11 7l-7.5 4.5V2.5z" fill="currentColor"/></svg>
+            Rever
+          </button>
+          <span class="rec-badge" id="recBadge" style="display:none">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5 5 9.5 11 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Gravação salva
+          </span>
+        </div>
+        <p class="fallback-note" id="fallbackNote"></p>
+
+        <div class="wiz-actions">
+          <button class="btn-wiz-back" data-back="step-contact">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Voltar
+          </button>
+          <button class="btn-wiz-next" id="nextQ1" disabled>
+            Próxima pergunta
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn-wiz-skip" id="skipQ1">Pular</button>
+        </div>
+      </div>
+
+      <!-- STEP: q2 -->
+      <div class="wiz-step" id="step-q2">
+        <span class="wiz-step-accent"></span>
+        <span class="step-overline">Pergunta 2 de 7</span>
+        <h2 class="step-q">Como vocês chamam essa posição internamente? Em qual área ela se encaixa?</h2>
+        <p class="step-hint">Ex: "Analista de Dados Sênior, no time de Growth" ou "Coordenador Comercial B2B".</p>
+        <div class="wiz-field">
+          <textarea class="wiz-textarea" id="aQ2" placeholder="Descreva o título e a área da posição..."></textarea>
+          <span class="field-err" id="aQ2-err">Por favor, preencha este campo</span>
+        </div>
+        <div class="wiz-actions">
+          <button class="btn-wiz-back" data-back="step-q1">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Voltar
+          </button>
+          <button class="btn-wiz-next" data-next="step-q3" data-val="aQ2">
+            Próxima pergunta
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP: q3 -->
+      <div class="wiz-step" id="step-q3">
+        <span class="wiz-step-accent"></span>
+        <span class="step-overline">Pergunta 3 de 7</span>
+        <h2 class="step-q">Daqui 3 meses, você disse que foi a melhor contratação que fez. O que essa pessoa entregou nesse período?</h2>
+        <p class="step-hint">Pense nos projetos, processos ou resultados que você espera que ela resolva ou impulsione.</p>
+        <div class="wiz-field">
+          <textarea class="wiz-textarea" id="aQ3" placeholder="Ex: Reestruturou o processo de geração de leads, implementou o CRM e dobrou a taxa de conversão..."></textarea>
+          <span class="field-err" id="aQ3-err">Por favor, preencha este campo</span>
+        </div>
+        <div class="wiz-actions">
+          <button class="btn-wiz-back" data-back="step-q2">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Voltar
+          </button>
+          <button class="btn-wiz-next" data-next="step-q4" data-val="aQ3">
+            Próxima pergunta
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP: q4 -->
+      <div class="wiz-step" id="step-q4">
+        <span class="wiz-step-accent"></span>
+        <span class="step-overline">Pergunta 4 de 7</span>
+        <h2 class="step-q">O que é inegociável no perfil técnico? Alguma experiência ou ferramenta sem a qual não adianta nem avançar?</h2>
+        <p class="step-hint">Pode ser uma tecnologia, um segmento de mercado, uma certificação ou um tipo de experiência específica.</p>
+        <div class="wiz-field">
+          <textarea class="wiz-textarea" id="aQ4" placeholder="Ex: Precisa ter atuado em e-commerce de alto volume, com domínio de Google Analytics 4 e Meta Ads..."></textarea>
+          <span class="field-err" id="aQ4-err">Por favor, preencha este campo</span>
+        </div>
+        <div class="wiz-actions">
+          <button class="btn-wiz-back" data-back="step-q3">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Voltar
+          </button>
+          <button class="btn-wiz-next" data-next="step-q5" data-val="aQ4">
+            Próxima pergunta
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP: q5 -->
+      <div class="wiz-step" id="step-q5">
+        <span class="wiz-step-accent"></span>
+        <span class="step-overline">Pergunta 5 de 7</span>
+        <h2 class="step-q">Além do técnico: que tipo de perfil comportamental encaixa com a sua equipe e cultura?</h2>
+        <p class="step-hint">Pense em pessoas que fizeram sucesso aí — o que elas tinham em comum no jeito de trabalhar?</p>
+        <div class="wiz-field">
+          <textarea class="wiz-textarea" id="aQ5" placeholder="Ex: Autonomia e dono do negócio são inegociáveis. A cultura é de muito resultado com pouca hierarquia..."></textarea>
+          <span class="field-err" id="aQ5-err">Por favor, preencha este campo</span>
+        </div>
+        <div class="wiz-actions">
+          <button class="btn-wiz-back" data-back="step-q4">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Voltar
+          </button>
+          <button class="btn-wiz-next" data-next="step-q6" data-val="aQ5">
+            Próxima pergunta
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP: q6 -->
+      <div class="wiz-step" id="step-q6">
+        <span class="wiz-step-accent"></span>
+        <span class="step-overline">Pergunta 6 de 7</span>
+        <h2 class="step-q">Qual o formato de trabalho? Presencial, híbrido ou remoto? Tem alguma particularidade?</h2>
+        <p class="step-hint">Cidade, disponibilidade para viagens, fuso horário, regimes especiais...</p>
+        <div class="wiz-field">
+          <textarea class="wiz-textarea" id="aQ6" placeholder="Ex: Híbrido 3x por semana em São Paulo - Paulista. Eventualmente viagens mensais para filiais..."></textarea>
+          <span class="field-err" id="aQ6-err">Por favor, preencha este campo</span>
+        </div>
+        <div class="wiz-actions">
+          <button class="btn-wiz-back" data-back="step-q5">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Voltar
+          </button>
+          <button class="btn-wiz-next" data-next="step-q7" data-val="aQ6">
+            Próxima pergunta
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP: q7 -->
+      <div class="wiz-step" id="step-q7">
+        <span class="wiz-step-accent"></span>
+        <span class="step-overline">Pergunta 7 de 7 &middot; Opcional</span>
+        <h2 class="step-q">Pra fechar: tem algo sobre o setor ou a empresa que o candidato precisaria entender antes de começar?</h2>
+        <p class="step-hint">Contexto de mercado, momento da empresa, conhecimento setorial específico — o que quiser acrescentar.</p>
+        <div class="wiz-field">
+          <textarea class="wiz-textarea" id="aQ7" placeholder="(opcional) Ex: A empresa está em expansão para o mercado americano, então inglês avançado é um diferencial..."></textarea>
+        </div>
+        <div class="wiz-actions">
+          <button class="btn-wiz-back" data-back="step-q6">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Voltar
+          </button>
+          <button class="btn-wiz-next" id="submitBtn">
+            Analisar candidatos
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP: processing -->
+      <div class="wiz-step" id="step-processing">
+        <div class="proc-wrap">
+          <div class="proc-spinner"></div>
+          <h2 class="proc-title">Analisando seu perfil</h2>
+          <p class="proc-msg" id="procMsg">Processando suas respostas com IA...</p>
+        </div>
+      </div>
+
+      <!-- STEP: results -->
+      <div class="wiz-step" id="step-results">
+        <div class="res-wrap">
+          <div class="res-check">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M4.5 13 10 18.5 21.5 7" stroke="#22c55e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="res-pre">Nossa IA encontrou</p>
+          <div class="res-count-row">
+            <span class="res-count" id="resCount">0</span>
+            <span class="res-count-suffix">candidatos</span>
+          </div>
+          <h2 class="res-headline" id="resHeadline">compatíveis com a sua vaga</h2>
+          <div class="res-job-tag" id="resJobTag">Posição mapeada</div>
+          <div class="res-divider"></div>
+          <div class="res-cta-box">
+            <h3 class="res-cta-title">Quer que a gente aborde todos eles?</h3>
+            <p class="res-cta-desc">
+              Um dos nossos consultores já recebeu os detalhes da sua busca e entrará em contato em breve. Se preferir, fale agora pelo WhatsApp.
+            </p>
+            <a href="#" class="btn-wapp" id="wappCta" target="_blank" rel="noopener">
+              <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M8.5 1C4.36 1 1 4.36 1 8.5c0 1.33.35 2.58.96 3.66L1 16l3.94-1.03A7.49 7.49 0 0 0 8.5 16c4.14 0 7.5-3.36 7.5-7.5S12.64 1 8.5 1zm3.6 10.5c-.16.44-.9.84-1.25.89-.32.04-.72.06-1.16-.07-.26-.09-.61-.21-1.04-.41-1.83-.8-3.03-2.66-3.12-2.79-.1-.12-.75-1-.75-1.9 0-.9.47-1.35.63-1.54.16-.18.35-.23.47-.23h.33c.11 0 .26-.04.4.3l.56 1.37c.05.12.07.25.01.4l-.21.44c-.06.13-.14.28-.06.43.4.72.81 1.22 1.4 1.62.2.13.47.09.62-.07l.28-.33c.14-.18.3-.24.47-.16l1.43.67c.18.08.29.12.33.19.04.06.04.39-.13.83z" fill="currentColor"/></svg>
+              Falar com um consultor agora
+            </a>
+          </div>
+          <p class="res-footnote">Um consultor entrará em contato em até 24h.</p>
+        </div>
+      </div>
+
+    </div><!-- /wiz-body -->
+  </div><!-- /wizard-overlay -->
+
+  <script src="script.js"></script>
+  <script>
+    /* ============================================================
+       CONFIGURAÇÃO — substitua os valores abaixo:
+
+       EDGE_FUNCTION_URL: URL da sua Supabase Edge Function.
+         Formato: https://SEU-PROJECT-REF.supabase.co/functions/v1/process-search
+
+       WHATSAPP_NUMBER: número com DDI+DDD sem espaços ou símbolos.
+         Ex: 5511999998888
+    ============================================================ */
+    const EDGE_FUNCTION_URL = 'https://niqouquemmtaokciaxpn.supabase.co/functions/v1/process-search';
+    const WHATSAPP_NUMBER   = '5511XXXXXXXXX';
+
+    /* ---- State ---- */
+    const S = {
+      step:      'step-contact',
+      steps:     ['step-contact','step-q1','step-q2','step-q3','step-q4','step-q5','step-q6','step-q7'],
+      audioBlob: null,
+      mimeType:  'audio/webm',
+      stream:    null,
+      recorder:  null,
+      timerInt:  null,
+      secs:      0,
+      recorded:  false,
+    };
+
+    /* ---- DOM ---- */
+    const overlay   = document.getElementById('wizardOverlay');
+    const startBtn  = document.getElementById('startWizardBtn');
+    const closeBtn  = document.getElementById('wizClose');
+    const dotsEl    = document.getElementById('wizDots');
+    const lblEl     = document.getElementById('wizLbl');
+    const progCtr   = document.getElementById('wizProgCenter');
+    const videoEl   = document.getElementById('videoPreview');
+    const vidPerm   = document.getElementById('vidPerm');
+    const recInd    = document.getElementById('recInd');
+    const timerEl   = document.getElementById('recTimer');
+    const recordBtn = document.getElementById('recordBtn');
+    const playBtn   = document.getElementById('playBtn');
+    const recBadge  = document.getElementById('recBadge');
+    const nextQ1    = document.getElementById('nextQ1');
+    const submitBtn = document.getElementById('submitBtn');
+
+    /* ---- Progress dots ---- */
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      S.steps.forEach(() => {
+        const d = document.createElement('span');
+        d.className = 'wiz-dot';
+        dotsEl.appendChild(d);
+      });
+    }
+    function updateDots() {
+      const idx = S.steps.indexOf(S.step);
+      dotsEl.querySelectorAll('.wiz-dot').forEach((d, i) => {
+        d.className = 'wiz-dot' + (i < idx ? ' done' : i === idx ? ' active' : '');
+      });
+      lblEl.textContent = `Passo ${Math.max(idx + 1, 1)} de ${S.steps.length}`;
+      const pct = Math.round((idx + 1) / S.steps.length * 100);
+      document.querySelector('.wiz-top').style.setProperty('--wiz-progress', pct + '%');
+    }
+
+    /* ---- Open / close ---- */
+    startBtn.addEventListener('click', () => {
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      buildDots();
+      show('step-contact');
+    });
+    closeBtn.addEventListener('click', closeWiz);
+    function closeWiz() {
+      if (S.step === 'step-processing') return;
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      stopStream();
+    }
+
+    /* ---- Show step ---- */
+    function show(id) {
+      document.querySelectorAll('.wiz-step').forEach(s => s.classList.remove('active'));
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('active');
+      S.step = id;
+      updateDots();
+      const hide = ['step-processing','step-results'].includes(id);
+      progCtr.style.visibility = hide ? 'hidden' : 'visible';
+      closeBtn.style.visibility = id === 'step-processing' ? 'hidden' : 'visible';
+    }
+
+    /* ---- Generic data-* nav ---- */
+    document.querySelectorAll('[data-next]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const valId = btn.dataset.val;
+        if (valId && !valTA(valId)) return;
+        show(btn.dataset.next);
+      });
+    });
+    document.querySelectorAll('[data-back]').forEach(btn => {
+      btn.addEventListener('click', () => show(btn.dataset.back));
+    });
+
+    /* ---- Contact validation ---- */
+    document.getElementById('nextContact').addEventListener('click', () => {
+      if (valContact()) show('step-q1');
+    });
+    function valContact() {
+      let ok = true;
+      [
+        { id:'cName',    err:'cName-err',    fn: v => v.trim().length > 1 },
+        { id:'cRole',    err:'cRole-err',    fn: v => v.trim().length > 1 },
+        { id:'cCompany', err:'cCompany-err', fn: v => v.trim().length > 1 },
+        { id:'cEmail',   err:'cEmail-err',   fn: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+        { id:'cPhone',   err:'cPhone-err',   fn: v => v.trim().length > 7 },
+      ].forEach(f => {
+        const inp = document.getElementById(f.id);
+        const e   = document.getElementById(f.err);
+        const v   = f.fn(inp.value);
+        inp.classList.toggle('error', !v);
+        e.classList.toggle('visible', !v);
+        if (!v) ok = false;
+      });
+      return ok;
+    }
+    function valTA(id) {
+      const el  = document.getElementById(id);
+      const err = document.getElementById(id + '-err');
+      const ok  = el && el.value.trim().length >= 12;
+      if (el)  el.classList.toggle('error', !ok);
+      if (err) err.classList.toggle('visible', !ok);
+      return ok;
+    }
+
+    /* ---- Q1 nav ---- */
+    document.getElementById('skipQ1').addEventListener('click', () => { stopStream(); show('step-q2'); });
+    nextQ1.addEventListener('click', () => { stopStream(); show('step-q2'); });
+
+    /* ---- Video recording ---- */
+    async function startRec() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 360 } },
+          audio: true
+        });
+        S.stream = stream;
+        videoEl.srcObject = stream;
+        videoEl.play();
+        vidPerm.style.display = 'none';
+
+        const audioStream = new MediaStream(stream.getAudioTracks());
+        const mimes = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
+        const mime  = mimes.find(m => MediaRecorder.isTypeSupported(m)) || '';
+        S.mimeType  = mime || 'audio/webm';
+
+        const chunks = [];
+        const rec = new MediaRecorder(audioStream, mime ? { mimeType: mime } : {});
+        S.recorder = rec;
+        rec.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+        rec.onstop = () => {
+          S.audioBlob = new Blob(chunks, { type: S.mimeType });
+          S.recorded  = true;
+          playBtn.style.display   = 'inline-flex';
+          recBadge.style.display  = 'inline-flex';
+          nextQ1.disabled         = false;
+        };
+        rec.start(250);
+
+        S.secs = 0;
+        recInd.classList.add('on');
+        timerEl.classList.add('on');
+        S.timerInt = setInterval(() => {
+          S.secs++;
+          const m = Math.floor(S.secs / 60);
+          const s = S.secs % 60;
+          timerEl.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+          if (S.secs >= 120) stopRec();
+        }, 1000);
+
+        recordBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="2" y="2" width="8" height="8" fill="currentColor"/></svg> Parar gravação`;
+        recordBtn.classList.add('recording');
+
+      } catch (err) {
+        console.warn('Mídia:', err);
+        document.getElementById('fallbackNote').textContent =
+          'Gravação não disponível neste navegador. Clique em "Pular" e continue pelas perguntas escritas.';
+        nextQ1.disabled = false;
+      }
+    }
+
+    function stopRec() {
+      if (S.recorder && S.recorder.state !== 'inactive') S.recorder.stop();
+      clearInterval(S.timerInt);
+      recInd.classList.remove('on');
+      timerEl.classList.remove('on');
+      recordBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" fill="currentColor"/></svg> Gravar novamente`;
+      recordBtn.classList.remove('recording');
+    }
+
+    function stopStream() {
+      if (S.stream) { S.stream.getTracks().forEach(t => t.stop()); S.stream = null; }
+      clearInterval(S.timerInt);
+    }
+
+    recordBtn.addEventListener('click', () => {
+      if (S.recorder && S.recorder.state === 'recording') stopRec();
+      else startRec();
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (!S.audioBlob) return;
+      const url = URL.createObjectURL(S.audioBlob);
+      const a = new Audio(url);
+      a.play();
+      a.onended = () => URL.revokeObjectURL(url);
+    });
+
+    /* ---- Submit ---- */
+    submitBtn.addEventListener('click', handleSubmit);
+
+    async function handleSubmit() {
+      show('step-processing');
+      const msgs = [
+        'Transcrevendo sua resposta em vídeo...',
+        'Analisando o perfil da posição com IA...',
+        'Mapeando candidatos na nossa base...',
+        'Montando o job description...',
+        'Quase pronto...',
+      ];
+      let mi = 0;
+      const msgEl = document.getElementById('procMsg');
+      const msgInt = setInterval(() => {
+        mi = (mi + 1) % msgs.length;
+        msgEl.style.opacity = '0';
+        setTimeout(() => { msgEl.textContent = msgs[mi]; msgEl.style.opacity = '1'; }, 320);
+      }, 2400);
+
+      const contact = {
+        name:    document.getElementById('cName').value.trim(),
+        role:    document.getElementById('cRole').value.trim(),
+        company: document.getElementById('cCompany').value.trim(),
+        email:   document.getElementById('cEmail').value.trim(),
+        phone:   document.getElementById('cPhone').value.trim(),
+      };
+      const textAnswers = {
+        q2: document.getElementById('aQ2').value.trim(),
+        q3: document.getElementById('aQ3').value.trim(),
+        q4: document.getElementById('aQ4').value.trim(),
+        q5: document.getElementById('aQ5').value.trim(),
+        q6: document.getElementById('aQ6').value.trim(),
+        q7: document.getElementById('aQ7').value.trim(),
+      };
+
+      let audioBase64 = null;
+      if (S.audioBlob) {
+        audioBase64 = await new Promise((res, rej) => {
+          const r = new FileReader();
+          r.onload = () => res(r.result);
+          r.onerror = rej;
+          r.readAsDataURL(S.audioBlob);
+        });
+      }
+
+      try {
+        const resp = await fetch(EDGE_FUNCTION_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contact, audioBase64, audioMimeType: S.mimeType, textAnswers }),
+        });
+        clearInterval(msgInt);
+        const data = resp.ok ? await resp.json() : { success: false };
+        showResults(data.candidateCount || 72, data.jobTitle, contact);
+      } catch (e) {
+        clearInterval(msgInt);
+        console.error(e);
+        showResults(72, null, contact);
+      }
+    }
+
+    /* ---- Results ---- */
+    function showResults(count, jobTitle, contact) {
+      show('step-results');
+      const title = jobTitle || 'sua posição';
+      document.getElementById('resHeadline').textContent = `compatíveis com a vaga de ${title}`;
+      document.getElementById('resJobTag').textContent   = jobTitle || 'Posição mapeada com sucesso';
+      animCount(count);
+
+      const msg = encodeURIComponent(
+        `Olá! Acabei de usar a busca de candidatos da Recrutaê.\n\nEmpresa: ${contact.company}\nPosição: ${jobTitle || '—'}\nNome: ${contact.name}\nEmail: ${contact.email}`
+      );
+      document.getElementById('wappCta').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+    }
+
+    function animCount(target) {
+      const el = document.getElementById('resCount');
+      const t0 = performance.now();
+      const dur = 1700;
+      function frame(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(e * target);
+        if (p < 1) requestAnimationFrame(frame);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /* ---- Textarea auto-resize ---- */
+    document.querySelectorAll('.wiz-textarea').forEach(ta => {
+      ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; });
+    });
+  </script>
+</body>
+</html>

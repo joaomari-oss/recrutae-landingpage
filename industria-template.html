@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indústria — Recrutaê</title>
+  <meta name="description" content="Recrutamento especializado por setor. A Recrutaê domina os desafios de cada indústria.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="icon" href="assets/logos/favicon-square.png" type="image/png">
+</head>
+<body>
+
+  <nav class="navbar transparent on-dark" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/logos/Recrutae horizontal 2026.png" alt="Recrutaê" class="logo-light" loading="eager">
+        <img src="assets/logos/Principal_Recrutae horizontal 2026.png" alt="Recrutaê" class="logo-dark" loading="eager">
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item has-dropdown">
+          <a href="#" class="nav-link">Sou empresa <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="dropdown">
+            <li><a href="recrutamento-selecao.html">Recrutamento e Seleção</a></li>
+            <li><a href="alocacao.html">Alocação</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="sou-candidato.html" class="nav-link">Sou candidato</a></li>
+        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="nav-item has-dropdown">
+          <a href="#" class="nav-link">Indústrias <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="dropdown dropdown-wide">
+            <li><a href="industria-template.html?ind=tecnologia">Tecnologia</a></li>
+            <li><a href="industria-template.html?ind=telecom">Telecom</a></li>
+            <li><a href="industria-template.html?ind=midia">Mídia</a></li>
+            <li><a href="industria-template.html?ind=varejo">Varejo</a></li>
+            <li><a href="industria-template.html?ind=bens-consumo">Bens de Consumo</a></li>
+            <li><a href="industria-template.html?ind=logistica">Logística</a></li>
+            <li><a href="industria-template.html?ind=servicos-financeiros">Serviços Financeiros</a></li>
+            <li><a href="industria-template.html?ind=banking">Banking</a></li>
+            <li><a href="industria-template.html?ind=agro">Agro</a></li>
+            <li><a href="industria-template.html?ind=energia">Energia</a></li>
+            <li><a href="industria-template.html?ind=seguros">Seguros</a></li>
+            <li><a href="industria-template.html?ind=educacao">Educação</a></li>
+            <li><a href="industria-template.html?ind=saude">Saúde</a></li>
+            <li><a href="industria-template.html?ind=games">Games</a></li>
+          </ul>
+        </li>
+        <li class="nav-item has-dropdown">
+          <a href="#" class="nav-link">Posições <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="dropdown dropdown-wide">
+            <li><a href="posicao-template.html?pos=bancos-financeiros">Bancos e Serviços Financeiros</a></li>
+            <li><a href="posicao-template.html?pos=engenharia-manufatura">Engenharia e Manufatura</a></li>
+            <li><a href="posicao-template.html?pos=financeiro-tributario">Financeiro e Tributário</a></li>
+            <li><a href="posicao-template.html?pos=imobiliario-construcao">Imobiliário e Construção</a></li>
+            <li><a href="posicao-template.html?pos=juridico-legal">Jurídico e Legal</a></li>
+            <li><a href="posicao-template.html?pos=marketing-comunicacao">Marketing/Comunicação/Digital</a></li>
+            <li><a href="posicao-template.html?pos=operacoes-logistica">Operações/Logística/Supply Chain</a></li>
+            <li><a href="posicao-template.html?pos=petroleo-gas">Petróleo e Gás</a></li>
+            <li><a href="posicao-template.html?pos=recursos-humanos">Recursos Humanos</a></li>
+            <li><a href="posicao-template.html?pos=saude-ciencias">Saúde e Ciências</a></li>
+            <li><a href="posicao-template.html?pos=tecnologia-informacao">Tecnologia da Informação</a></li>
+            <li><a href="posicao-template.html?pos=vendas">Vendas</a></li>
+          </ul>
+        </li>
+      </ul>
+      <a href="index.html#contato" class="btn-cta-nav">Agendar Reunião</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+  <main>
+
+    <!-- HERO (rendered by JS) -->
+    <section class="page-hero" id="ind-hero">
+      <div class="hero-blob-gold"></div>
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <a href="index.html#industrias">Indústrias</a>
+          <span class="breadcrumb-sep">›</span>
+          <span id="ind-breadcrumb">—</span>
+        </nav>
+        <h1 class="page-hero-title animate-up" id="ind-title">Carregando...</h1>
+        <p class="page-hero-sub animate-up" id="ind-sub"></p>
+        <a href="#contato" class="btn btn-gold animate-up">Falar com especialista</a>
+      </div>
+    </section>
+
+    <!-- DESAFIOS -->
+    <section class="section-cream">
+      <div class="container">
+        <div class="section-header animate-up">
+          <span class="label">Desafios do setor</span>
+          <h2 class="section-title"><em>O que torna o recrutamento nessa indústria complexo</em></h2>
+        </div>
+        <div class="diff-list" id="ind-challenges"></div>
+      </div>
+    </section>
+
+    <!-- POSICOES -->
+    <section class="section-white">
+      <div class="container">
+        <div class="section-header animate-up">
+          <span class="label">Posições que trabalhamos</span>
+          <h2 class="section-title">Cargos e perfis que <em>recrutamos</em></h2>
+        </div>
+        <div class="chips animate-up" id="ind-positions"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contato">
+      <div class="container">
+        <div class="contact-header animate-up">
+          <span class="label label-light">Fale conosco</span>
+          <h2 class="section-title" style="color:var(--white)">Fale com um <em>especialista</em></h2>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info animate-up">
+            <div class="contact-info-block">
+              <p class="contact-info-lbl">Endereço</p>
+              <p class="contact-info-val">Rua Castilho 392, conj 101<br>Brooklin, São Paulo/SP</p>
+            </div>
+            <div class="contact-info-block">
+              <p class="contact-info-lbl">Telefone</p>
+              <p class="contact-info-val">(11) 4081-1944 | Ext: 3046<br>(11) 5192-8763</p>
+            </div>
+            <div class="contact-info-block">
+              <p class="contact-info-lbl">CNPJ</p>
+              <p class="contact-info-val">RECRUTAE LTDA – 46.886.680/0001-93</p>
+            </div>
+            <div class="contact-social">
+              <a href="https://www.instagram.com/recrut.ae" target="_blank" rel="noopener" class="social-icon-link" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/company/recruta%C3%AA/posts/?feedView=all" target="_blank" rel="noopener" class="social-icon-link" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.339 18.337V9.667H5.667v8.67h2.672zM7.003 8.51c.92 0 1.484-.61 1.484-1.371-.017-.778-.563-1.371-1.466-1.371-.902 0-1.491.593-1.491 1.371 0 .761.572 1.371 1.456 1.371h.017zm11.335 9.827v-4.97c0-2.465-1.317-3.612-3.073-3.612-1.418 0-2.052.78-2.408 1.327h.018V9.667h-2.672c.035.754 0 8.67 0 8.67h2.672v-4.842c0-.24.017-.48.087-.652.19-.48.628-.977 1.36-.977.96 0 1.345.732 1.345 1.804v4.667h2.671z"/></svg>
+              </a>
+            </div>
+          </div>
+          <form class="contact-form animate-up stagger-1" id="contactFormInd" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nome">Nome *</label>
+                <input type="text" id="nome" name="nome" required placeholder="Seu nome completo">
+                <span class="form-error"></span>
+              </div>
+              <div class="form-group">
+                <label for="email">E-mail *</label>
+                <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                <span class="form-error"></span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="tel">Telefone</label>
+                <input type="tel" id="tel" name="telefone" placeholder="(11) 99999-9999">
+              </div>
+              <div class="form-group">
+                <label for="empresa">Empresa</label>
+                <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cargo">Cargo</label>
+                <input type="text" id="cargo" name="cargo" placeholder="Seu cargo">
+              </div>
+              <div class="form-group">
+                <label for="pais">País</label>
+                <select id="pais" name="pais">
+                  <option value="BR" selected>Brasil</option>
+                  <option value="PT">Portugal</option>
+                  <option value="US">Estados Unidos</option>
+                  <option value="AR">Argentina</option>
+                  <option value="MX">México</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-checks">
+              <label class="form-check"><input type="checkbox" name="tipo" value="empresa" checked> Sou empresa</label>
+              <label class="form-check"><input type="checkbox" name="tipo" value="candidato"> Sou candidato</label>
+            </div>
+            <button type="submit" class="btn btn-gold btn-full">
+              <span>Enviar mensagem</span>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M9 3l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="form-success" id="formSuccess" style="display:none">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Mensagem enviada! Entraremos em contato em breve.
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/logos/Recrutae horizontal 2026.png" alt="Recrutaê" class="footer-logo" loading="lazy">
+          <p class="footer-desc">Recrutamento Digital Escalável para o mercado brasileiro.</p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/recrut.ae" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/recruta%C3%AA/posts/?feedView=all" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.339 18.337V9.667H5.667v8.67h2.672zM7.003 8.51c.92 0 1.484-.61 1.484-1.371-.017-.778-.563-1.371-1.466-1.371-.902 0-1.491.593-1.491 1.371 0 .761.572 1.371 1.456 1.371h.017zm11.335 9.827v-4.97c0-2.465-1.317-3.612-3.073-3.612-1.418 0-2.052.78-2.408 1.327h.018V9.667h-2.672c.035.754 0 8.67 0 8.67h2.672v-4.842c0-.24.017-.48.087-.652.19-.48.628-.977 1.36-.977.96 0 1.345.732 1.345 1.804v4.667h2.671z"/></svg>
+            </a>
+          </div>
+        </div>
+        <nav class="footer-nav">
+          <div class="footer-col"><h4>Empresa</h4><ul><li><a href="recrutamento-selecao.html">Recrutamento e Seleção</a></li><li><a href="alocacao.html">Alocação</a></li></ul></div>
+          <div class="footer-col"><h4>Candidatos</h4><ul><li><a href="sou-candidato.html">Sou candidato</a></li></ul></div>
+          <div class="footer-col"><h4>Indústrias</h4><ul><li><a href="industria-template.html?ind=tecnologia">Tecnologia</a></li><li><a href="industria-template.html?ind=banking">Banking</a></li><li><a href="industria-template.html?ind=saude">Saúde</a></li></ul></div>
+          <div class="footer-col"><h4>Conteúdo</h4><ul><li><a href="blog.html">Blog</a></li></ul></div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Recrutaê. Todos os direitos reservados.</p>
+        <p>RECRUTAE LTDA – 46.886.680/0001-93</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js?v=3"></script>
+  <script>
+    const INDUSTRIES = {
+      tecnologia: {
+        name: 'Tecnologia',
+        color: '#4B9EFF',
+        hero: 'Recrutamento e Seleção para o Setor de Tecnologia',
+        sub: 'Encontre os melhores talentos tech para acelerar sua transformação digital.',
+        challenges: [
+          'Competitividade acirrada por talentos tech em escala global',
+          'Dificuldade em encontrar perfis que aliam liderança técnica e visão de negócio',
+          'Rotatividade alta e guerra por talentos entre empresas de tecnologia',
+          'Necessidade de atualização constante em stacks e metodologias emergentes'
+        ],
+        positions: ['Product Manager', 'Engenheiro de Software', 'CTO', 'Head de Dados', 'DevOps', 'Arquiteto de Soluções', 'Scrum Master', 'QA Lead', 'Data Scientist', 'CISO'],
+      },
+      telecom: {
+        name: 'Telecom',
+        color: '#FF6B35',
+        hero: 'Recrutamento Especializado para Telecomunicações',
+        sub: 'Líderes capazes de navegar a convergência entre redes, digital e customer experience.',
+        challenges: [
+          'Transformação digital acelerada com infraestrutura legada ainda em operação',
+          'Convergência entre telecom tradicional e plataformas digitais exige perfis híbridos',
+          'Pressão regulatória e por eficiência operacional simultaneamente',
+          'Expansão 5G demanda especialistas raros no mercado'
+        ],
+        positions: ['Engenheiro de Telecomunicações', 'Gerente de Operações de Rede', 'Head de Infraestrutura', 'Especialista em 5G', 'Gestor de Projetos Telecom', 'Head de Customer Experience'],
+      },
+      midia: {
+        name: 'Mídia',
+        color: '#9B59B6',
+        hero: 'Talentos para a Indústria de Mídia e Entretenimento',
+        sub: 'Profissionais que unem criatividade editorial com domínio de plataformas digitais.',
+        challenges: [
+          'Transformação do modelo de negócio de mídia tradicional para digital-first',
+          'Monetização de conteúdo em ambiente de streaming e redes sociais',
+          'Necessidade de profissionais que entendam dados e audiência simultaneamente',
+          'Concorrência com grandes plataformas globais por talentos criativos'
+        ],
+        positions: ['Head de Conteúdo Digital', 'Gerente de Plataformas', 'Diretor Comercial', 'Head de Marketing', 'Editor-chefe', 'Head de Produto de Mídia'],
+      },
+      varejo: {
+        name: 'Varejo',
+        color: '#E74C3C',
+        hero: 'Recrutamento para o Varejo Omnichannel',
+        sub: 'Executivos que dominam a integração entre loja física, e-commerce e experiência do cliente.',
+        challenges: [
+          'Integração entre canais online e offline sem fricção para o consumidor',
+          'Gestão da cadeia de suprimentos com alta volatilidade de demanda',
+          'Pressão crescente de marketplaces e concorrentes digitais',
+          'Transformação da experiência de compra com tecnologia e personalização'
+        ],
+        positions: ['Head de E-commerce', 'Gerente de Operações', 'Diretor de Expansão', 'Head de CX', 'Gestor de Categoria', 'Head de Supply Chain Varejo'],
+      },
+      'bens-consumo': {
+        name: 'Bens de Consumo',
+        color: '#27AE60',
+        hero: 'Talentos para Bens de Consumo e FMCG',
+        sub: 'Líderes que equilibram inovação de portfólio, distribuição e sustentabilidade.',
+        challenges: [
+          'Competição acirrada com marcas globais e regionais em todos os segmentos',
+          'Pressão por eficiência na cadeia de distribuição e precificação dinâmica',
+          'Consumidor mais exigente quanto a sustentabilidade e transparência',
+          'Digitalização do trade marketing e dos canais de venda'
+        ],
+        positions: ['Gerente de Produto', 'Head de Trade Marketing', 'Diretor Comercial', 'Gerente de Key Accounts', 'Head de Supply Chain', 'Gerente de Inovação'],
+      },
+      logistica: {
+        name: 'Logística',
+        color: '#F39C12',
+        hero: 'Especialistas em Recrutamento para Logística e Supply Chain',
+        sub: 'Profissionais que transformam complexidade operacional em vantagem competitiva.',
+        challenges: [
+          'Pressão crescente por last-mile delivery rápido e sustentável',
+          'Automação de armazéns e centros de distribuição exige novos perfis',
+          'Visibilidade em tempo real da supply chain como diferencial competitivo',
+          'Gestão de custos e margens em ambiente inflacionário'
+        ],
+        positions: ['Gerente de Operações', 'Head de Supply Chain', 'Coordenador de Distribuição', 'Gerente de Frotas', 'Especialista em WMS', 'Head de Planejamento Logístico'],
+      },
+      'servicos-financeiros': {
+        name: 'Serviços Financeiros',
+        color: '#1ABC9C',
+        hero: 'Recrutamento para Serviços Financeiros',
+        sub: 'Executivos que navegam regulação, Open Finance e transformação digital simultaneamente.',
+        challenges: [
+          'Open Finance e Banking as a Service redefinem modelos de negócio tradicionais',
+          'Regulamentação crescente do Banco Central exige perfis técnicos e de compliance',
+          'Concorrência das fintechs força bancos a acelerar transformação digital',
+          'Gestão de risco em ambiente de juros altos e inadimplência volátil'
+        ],
+        positions: ['Gerente de Produtos Financeiros', 'Head de Compliance', 'Especialista em Open Banking', 'Gerente de Risco', 'Head de Transformação Digital', 'Gerente de Câmbio'],
+      },
+      banking: {
+        name: 'Banking',
+        color: '#2980B9',
+        hero: 'Recrutamento Especializado para o Setor Bancário',
+        sub: 'Líderes que conciliam tradição financeira com agilidade digital e inovação.',
+        challenges: [
+          'Pressão das fintechs e bancos digitais força reinvenção constante',
+          'Digitalização de agências e migração de clientes para canais online',
+          'Regulação prudencial e stress tests exigem expertise técnico especializado',
+          'Atração de talentos tech para um ambiente corporativo tradicional'
+        ],
+        positions: ['CEO de Banco Digital', 'Head de Corporate Banking', 'Gerente de Wealth Management', 'Head de Crédito', 'Gerente de Produtos Bancários', 'Head de Open Finance'],
+      },
+      agro: {
+        name: 'Agro',
+        color: '#8BC34A',
+        hero: 'Talentos para o Agronegócio Brasileiro',
+        sub: 'Profissionais que unem conhecimento técnico do campo com gestão moderna e tecnologia.',
+        challenges: [
+          'Incorporação de AgTech e precisão digital nas operações agrícolas',
+          'Rastreabilidade e certificações para mercados exportadores exigentes',
+          'Sustentabilidade e ESG como requisito de entrada em cadeias globais',
+          'Gestão financeira sofisticada para operações de grande escala'
+        ],
+        positions: ['Gerente Agrícola', 'Head de AgTech', 'Diretor Comercial Agro', 'Especialista em Commodities', 'Gestor de Propriedade Rural', 'Head de Sustentabilidade Agro'],
+      },
+      energia: {
+        name: 'Energia',
+        color: '#FFC107',
+        hero: 'Recrutamento para o Setor de Energia',
+        sub: 'Executivos que lideram a transição energética com competência técnica e visão de futuro.',
+        challenges: [
+          'Transição para energias renováveis cria demanda por perfis técnicos especializados',
+          'Regulação ANEEL em constante evolução exige expertise regulatório',
+          'Projetos de energia solar e eólica crescem acima da disponibilidade de talentos',
+          'ESG como pilar estratégico em todas as decisões do setor'
+        ],
+        positions: ['Engenheiro de Energia', 'Head de Projetos Renováveis', 'Gerente Regulatório', 'Especialista em ESG', 'Diretor de Operações de Usina', 'Head de Trading Energético'],
+      },
+      seguros: {
+        name: 'Seguros',
+        color: '#3498DB',
+        hero: 'Especialistas em Recrutamento para o Mercado de Seguros',
+        sub: 'Talentos que navegam a digitalização do mercado segurador com expertise atuarial e comercial.',
+        challenges: [
+          'Insurtech transformando modelos de distribuição e pricing tradicionais',
+          'Digitalização da jornada do cliente e automação de sinistros',
+          'Regulação SUSEP em evolução constante exige especialistas qualificados',
+          'Atração de perfis tech para um setor historicamente conservador'
+        ],
+        positions: ['Atuário Sênior', 'Gerente de Produtos de Seguro', 'Head de Sinistros', 'Gerente Comercial', 'Especialista em Regulação SUSEP', 'Head de Insurtech'],
+      },
+      educacao: {
+        name: 'Educação',
+        color: '#9C27B0',
+        hero: 'Talentos para EdTechs e Instituições de Ensino',
+        sub: 'Líderes que combinam visão pedagógica com domínio de tecnologia educacional.',
+        challenges: [
+          'EdTechs em crescimento acelerado competem por talentos escassos em produto e tech',
+          'Ensino híbrido demanda líderes com competências pedagógicas e digitais simultâneas',
+          'Queda de matrículas presenciais pressiona IES a inovar em modelo de negócio',
+          'Personalização em escala via IA e dados como diferencial competitivo'
+        ],
+        positions: ['Head de Produto Educacional', 'Gerente de Parcerias B2B', 'Diretor Pedagógico', 'Head de Growth', 'Coordenador Acadêmico', 'Head de Customer Success Educação'],
+      },
+      saude: {
+        name: 'Saúde',
+        color: '#E91E63',
+        hero: 'Recrutamento para Saúde e HealthTech',
+        sub: 'Profissionais que unem expertise clínica com capacidade de gestão e inovação digital.',
+        challenges: [
+          'Digitalização da saúde e telemedicina exigem perfis médicos com letramento tecnológico',
+          'Regulação ANVISA e ANS cria demanda constante por especialistas de compliance',
+          'HealthTechs crescem rapidamente e precisam de líderes de produto e tech especializados',
+          'Gestão hospitalar sob pressão de custos e qualidade simultaneamente'
+        ],
+        positions: ['Médico Gestor', 'Head de HealthTech', 'Gerente de Operações Hospitalares', 'Especialista em Regulação Saúde', 'Head de Produto Health', 'Diretor Médico'],
+      },
+      games: {
+        name: 'Games',
+        color: '#FF5722',
+        hero: 'Talentos para a Indústria de Games',
+        sub: 'Criadores e gestores que constroem experiências memoráveis e negócios sustentáveis.',
+        challenges: [
+          'Mercado global de games no Brasil cresce acima de 15% ao ano',
+          'Escassez de game designers e programadores especializados em engines 3D',
+          'Monetização via live service e battle passes exige expertise em product management',
+          'Esports e streaming como canais de aquisição e retenção de jogadores'
+        ],
+        positions: ['Game Designer', 'Head de Monetização', 'Gerente de Comunidade', 'Produtor de Games', 'Head de Esports', 'Programador de Engine'],
+      },
+    };
+
+    (function() {
+      const key = new URLSearchParams(window.location.search).get('ind');
+      const data = INDUSTRIES[key];
+
+      if (!data) {
+        document.getElementById('ind-title').textContent = 'Indústria não encontrada';
+        document.getElementById('ind-sub').textContent = 'Verifique o endereço e tente novamente.';
+        return;
+      }
+
+      // Update page title & meta
+      document.title = data.name + ' — Recrutaê';
+
+      // Breadcrumb
+      document.getElementById('ind-breadcrumb').textContent = data.name;
+
+      // Hero
+      const titleEl = document.getElementById('ind-title');
+      titleEl.innerHTML = data.hero.replace(data.name, '<em>' + data.name + '</em>');
+      document.getElementById('ind-sub').textContent = data.sub;
+
+      // Challenges
+      const challengesEl = document.getElementById('ind-challenges');
+      const icons = ['◎', '✦', '◈', '⚡'];
+      data.challenges.forEach(function(c, i) {
+        challengesEl.innerHTML += '<div class="diff-item animate-up">'
+          + '<div class="diff-icon">' + icons[i % icons.length] + '</div>'
+          + '<div class="diff-content"><p class="diff-body">' + c + '</p></div>'
+          + '</div>';
+      });
+
+      // Positions
+      const posEl = document.getElementById('ind-positions');
+      data.positions.forEach(function(p) {
+        posEl.innerHTML += '<span class="chip">' + p + '</span>';
+      });
+    })();
+  </script>
+</body>
+</html>
