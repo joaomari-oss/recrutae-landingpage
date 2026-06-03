@@ -14,11 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
   safe(initForm, 'form');
   safe(initSmoothScroll, 'smoothScroll');
   safe(initPageTransitions, 'pageTransitions');
+  safe(initBlogArt, 'blogArt');
+  safe(initInstagram, 'instagram');
 
   // Safety net: nothing stays invisible if the IntersectionObserver fails
   setTimeout(() => {
-    document.querySelectorAll('.animate-up:not(.in-view)').forEach(el => el.classList.add('in-view'));
-  }, 1200);
+    document.querySelectorAll('.animate-up:not(.in-view), .reveal-right:not(.in-view)').forEach(el => el.classList.add('in-view'));
+  }, 1500);
 });
 
 /* =========================================================
@@ -229,11 +231,9 @@ function initIndustries() {
    SCROLL ANIMATIONS
    ========================================================= */
 function initScrollAnimations() {
-  const els = document.querySelectorAll('.animate-up');
+  const els = document.querySelectorAll('.animate-up, .reveal-right');
   if (!els.length) return;
 
-  // Reveal anything already in the initial viewport synchronously — the very
-  // first paint of a subpage hero must never look empty.
   const vh = window.innerHeight || document.documentElement.clientHeight;
   els.forEach(el => {
     const r = el.getBoundingClientRect();
@@ -247,9 +247,57 @@ function initScrollAnimations() {
         obs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
   els.forEach(el => { if (!el.classList.contains('in-view')) obs.observe(el); });
+}
+
+/* =========================================================
+   BLOG ART & INSTAGRAM
+   ========================================================= */
+function initBlogArt() {
+  const thumbs = document.querySelectorAll('.blog-thumb');
+  const gradients = [
+    'linear-gradient(135deg, #0A0918 0%, #1F1C4B 100%)',
+    'linear-gradient(135deg, #1F1C4B 0%, #D4A010 100%)',
+    'linear-gradient(135deg, #D4A010 0%, #0A0918 100%)'
+  ];
+
+  thumbs.forEach((thumb, i) => {
+    const art = document.createElement('div');
+    art.className = 'blog-cover-art';
+    art.style.background = gradients[i % gradients.length];
+    art.innerHTML = `
+      <div class="blog-cover-overlay"></div>
+      <svg style="position:absolute; inset:0; width:100%; height:100%; opacity:0.05" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0 100 L100 0 L100 100 Z" fill="white" />
+      </svg>
+    `;
+    thumb.prepend(art);
+  });
+}
+
+function initInstagram() {
+  const items = document.querySelectorAll('.insta-item');
+  const branding = [
+    { name: 'Cultura Recrutaê', color: '#405de6' },
+    { name: 'Bastidores', color: '#833ab4' },
+    { name: 'Vagas Digitais', color: '#E1306C' }
+  ];
+
+  items.forEach((item, i) => {
+    if (!branding[i]) return;
+    const label = document.createElement('div');
+    label.style.cssText = 'position:absolute; bottom:12px; left:12px; color:white; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; z-index:2;';
+    label.textContent = branding[i].name;
+    item.appendChild(label);
+    
+    // Simulate post feel with brand color overlay
+    item.style.position = 'relative';
+    const tint = document.createElement('div');
+    tint.style.cssText = `position:absolute; inset:0; background:${branding[i].color}; opacity:0.15; pointer-events:none;`;
+    item.appendChild(tint);
+  });
 }
 
 /* =========================================================
