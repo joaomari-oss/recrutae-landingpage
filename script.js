@@ -15,12 +15,67 @@ document.addEventListener('DOMContentLoaded', () => {
   safe(initSmoothScroll, 'smoothScroll');
   safe(initPageTransitions, 'pageTransitions');
   safe(initInstagram, 'instagram');
+  safe(initAnalytics, 'analytics');
 
   // Safety net: nothing stays invisible if the IntersectionObserver fails
   setTimeout(() => {
     document.querySelectorAll('.animate-up:not(.in-view), .reveal-right:not(.in-view)').forEach(el => el.classList.add('in-view'));
   }, 1500);
 });
+
+/* =========================================================
+   ANALYTICS — Simple tracking for page views and CTAs
+   ========================================================= */
+const ANALYTICS_URL  = 'https://niqouquemmtaokciaxpn.supabase.co/rest/v1/analytics_events';
+const ANALYTICS_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pcW91cXVlbW10YW9rY2lheHBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5OTMyNzYsImV4cCI6MjA5NTU2OTI3Nn0.v7j1VxmRIIgxla9MEamhlDyGJNlRLAjC_GYkJyIG3w0';
+
+function initAnalytics() {
+  // 1. Get or create Session ID
+  let sid = localStorage.getItem('rec_sid');
+  if (!sid) {
+    sid = crypto.randomUUID?.() || Math.random().toString(36).slice(2) + Date.now().toString(36);
+    localStorage.setItem('rec_sid', sid);
+  }
+
+  const track = async (type, meta = {}) => {
+    try {
+      fetch(ANALYTICS_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': ANALYTICS_KEY,
+          'Authorization': `Bearer ${ANALYTICS_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          session_id: sid,
+          event_type: type,
+          page: location.pathname,
+          meta: {
+            ...meta,
+            referrer: document.referrer,
+            screen: `${window.innerWidth}x${window.innerHeight}`,
+            ua: navigator.userAgent
+          }
+        })
+      });
+    } catch (e) { /* silent */ }
+  };
+
+  // 2. Track Page View
+  track('page_view');
+
+  // 3. Track CTA Clicks
+  document.querySelectorAll('.btn, .btn-gold, .btn-cta-nav, .busca-start-btn, .btn-wapp').forEach(btn => {
+    btn.addEventListener('click', () => {
+      track('cta_click', { 
+        text: btn.innerText.trim().slice(0, 50),
+        id: btn.id || null,
+        class: btn.className
+      });
+    });
+  });
+}
 
 /* =========================================================
    NAVBAR
