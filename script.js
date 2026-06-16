@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   safe(initForm, 'form');
   safe(initSmoothScroll, 'smoothScroll');
   safe(initPageTransitions, 'pageTransitions');
-  safe(initBlogArt, 'blogArt');
   safe(initInstagram, 'instagram');
 
   // Safety net: nothing stays invisible if the IntersectionObserver fails
@@ -361,54 +360,96 @@ function initCarousel() {
 }
 
 /* =========================================================
-   FORM VALIDATION
+   CONTACT FORM — real submission to Supabase Edge Function
+   (saves to the contact_leads table + emails the recruiter,
+    so every lead shows up in the admin page and the inbox)
    ========================================================= */
-function initForm() {
-  const form = document.getElementById('contactForm');
-  if (!form) return;
+const CONTACT_ENDPOINT = 'https://niqouquemmtaokciaxpn.supabase.co/functions/v1/submit-contact';
 
-  const success = document.getElementById('formSuccess');
-  const btnText = document.getElementById('btnText');
+function initForm() {
+  document.querySelectorAll('form.contact-form').forEach(setupContactForm);
+}
+
+function setupContactForm(form) {
+  const success = form.querySelector('.form-success');
+  const btn     = form.querySelector('[type=submit]');
+  const btnText = btn?.querySelector('span');
+  const defaultLabel = btnText ? btnText.textContent : 'Enviar mensagem';
 
   const setErr = (el, msg) => {
-    el.closest('.form-group')?.classList.add('has-error');
-    const span = el.closest('.form-group')?.querySelector('.form-error');
+    const g = el.closest('.form-group');
+    g?.classList.add('has-error');
+    const span = g?.querySelector('.form-error');
     if (span) span.textContent = msg;
   };
   const clrErr = (el) => {
-    el.closest('.form-group')?.classList.remove('has-error');
-    const span = el.closest('.form-group')?.querySelector('.form-error');
+    const g = el.closest('.form-group');
+    g?.classList.remove('has-error');
+    const span = g?.querySelector('.form-error');
     if (span) span.textContent = '';
   };
 
-  form.addEventListener('submit', e => {
+  const nome  = form.querySelector('[name=nome]');
+  const email = form.querySelector('[name=email]');
+  [nome, email].forEach(el => el?.addEventListener('blur', () => { if (el.value.trim()) clrErr(el); }));
+
+  const showResult = (okState) => {
+    if (!success) return;
+    const icon = okState
+      ? '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      : '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v5M10 13.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    const msg = okState
+      ? 'Mensagem enviada! Entraremos em contato em breve.'
+      : 'Não foi possível enviar agora. Tente novamente ou escreva para contato@recrutae.com.br.';
+    success.innerHTML = icon + '<span>' + msg + '</span>';
+    success.style.display = 'flex';
+    success.classList.add('visible');
+    success.style.borderColor = okState ? '' : 'rgba(248,113,113,0.4)';
+    success.style.color = okState ? '' : '#F87171';
+  };
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const nome  = form.querySelector('#nome');
-    const email = form.querySelector('#email');
     let ok = true;
-
-    clrErr(nome); clrErr(email);
-    if (!nome.value.trim())  { setErr(nome,  'Informe seu nome.'); ok = false; }
-    if (!email.value.trim()) { setErr(email, 'Informe seu e-mail.'); ok = false; }
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { setErr(email, 'E-mail inválido.'); ok = false; }
-
+    if (nome)  { clrErr(nome);  if (!nome.value.trim())  { setErr(nome,  'Informe seu nome.'); ok = false; } }
+    if (email) {
+      clrErr(email);
+      if (!email.value.trim()) { setErr(email, 'Informe seu e-mail.'); ok = false; }
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { setErr(email, 'E-mail inválido.'); ok = false; }
+    }
     if (!ok) return;
 
-    if (btnText) btnText.textContent = 'Enviando…';
-    const btn = form.querySelector('[type=submit]');
+    const val = n => form.querySelector(`[name=${n}]`)?.value.trim() || '';
+    const payload = {
+      name:       val('nome'),
+      email:      val('email'),
+      phone:      val('telefone'),
+      company:    val('empresa'),
+      role:       val('cargo'),
+      country:    val('pais'),
+      types:      [...form.querySelectorAll('input[name=tipo]:checked')].map(c => c.value),
+      sourcePage: (document.title || '').replace(/\s*[—|].*$/, '').trim() || location.pathname,
+    };
+
     if (btn) btn.disabled = true;
+    if (btnText) btnText.textContent = 'Enviando…';
 
-    setTimeout(() => {
+    try {
+      const resp = await fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) throw new Error('status ' + resp.status);
       form.reset();
+      showResult(true);
+    } catch (err) {
+      console.error('[recrutae] envio de contato falhou', err);
+      showResult(false);
+    } finally {
       if (btn) btn.disabled = false;
-      if (btnText) btnText.textContent = 'Enviar mensagem';
-      if (success) { success.classList.add('visible'); setTimeout(() => success.classList.remove('visible'), 5000); }
-    }, 1200);
-  });
-
-  ['#nome', '#email'].forEach(sel => {
-    const el = form.querySelector(sel);
-    el?.addEventListener('blur', () => { if (el.value.trim()) clrErr(el); });
+      if (btnText) btnText.textContent = defaultLabel;
+    }
   });
 }
 
@@ -423,8 +464,21 @@ function initSmoothScroll() {
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      const offset = (document.getElementById('navbar')?.offsetHeight || 72) + 8;
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      
+      // Se for um dos botões principais de CTA que levam ao final/contato, 
+      // podemos dar um feedback visual ou garantir um scroll bem fluido.
+      const isCta = a.textContent.includes('Enviar') || a.textContent.includes('Reunião') || a.textContent.includes('contato');
+      
+      const offset = (document.getElementById('navbar')?.offsetHeight || 72) + 20;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - offset;
+      
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'smooth'
+      });
+
+      // Se for mobile, fecha o menu
+      if (window.closeMobileMenu) window.closeMobileMenu();
     });
   });
 }
@@ -433,25 +487,38 @@ function initSmoothScroll() {
    PAGE TRANSITIONS
    ========================================================= */
 function initPageTransitions() {
-  const overlay = document.createElement('div');
-  overlay.id = 'page-overlay';
-  document.body.insertBefore(overlay, document.body.firstChild);
+  let overlay = document.getElementById('page-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'page-overlay';
+    document.body.insertBefore(overlay, document.body.firstChild);
+  }
 
   document.querySelectorAll('a').forEach(a => {
     const href = a.getAttribute('href');
-    if (!href || a.target === '_blank') return;
+    if (!href || a.target === '_blank' || a.classList.contains('no-transition')) return;
+    
+    // Ignora links internos, protocolos e links externos
     if (
       href.startsWith('#') ||
       href.startsWith('mailto:') ||
       href.startsWith('tel:') ||
-      /^https?:\/\//.test(href)
+      /^https?:\/\//.test(href) ||
+      href.includes('wa.me')
     ) return;
 
     a.addEventListener('click', e => {
+      // Verifica se é um clique simples (sem ctrl/cmd)
+      if (e.metaKey || e.ctrlKey) return;
+
       e.preventDefault();
       const dest = a.href;
       overlay.classList.add('active');
-      setTimeout(() => { window.location.href = dest; }, 280);
+      
+      // Reduzimos o timeout para 250ms para ser mais responsivo (combina com o ease-in do CSS)
+      setTimeout(() => { 
+        window.location.href = dest; 
+      }, 250);
     });
   });
 }

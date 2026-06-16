@@ -31,3 +31,38 @@ CREATE POLICY "edge_function_full_access" ON candidate_searches
   FOR ALL
   USING     (auth.jwt() ->> 'role' = 'service_role')
   WITH CHECK (auth.jwt() ->> 'role' = 'service_role');
+
+-- ============================================================
+-- Recrutaê — Supabase: leads do formulário "Entre em contato"
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS contact_leads (
+  id           UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at   TIMESTAMPTZ DEFAULT NOW(),
+  name         TEXT        NOT NULL,
+  email        TEXT        NOT NULL,
+  phone        TEXT,
+  company      TEXT,
+  role         TEXT,
+  country      TEXT,
+  types        TEXT[],
+  source_page  TEXT,
+  status       TEXT        DEFAULT 'new'
+    CHECK (status IN ('new','contacted','converted','disqualified'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_cl_created ON contact_leads (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_cl_status  ON contact_leads (status);
+
+ALTER TABLE contact_leads ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "edge_function_full_access" ON contact_leads
+  FOR ALL
+  USING     (auth.jwt() ->> 'role' = 'service_role')
+  WITH CHECK (auth.jwt() ->> 'role' = 'service_role');
+
+-- Admin autenticado (painel) pode ler e atualizar status
+CREATE POLICY "auth_select" ON contact_leads
+  FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "auth_update" ON contact_leads
+  FOR UPDATE USING (auth.role() = 'authenticated');

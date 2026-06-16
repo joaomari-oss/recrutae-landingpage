@@ -736,6 +736,7 @@ body {
 </style>
 </head>
 <body>
+  <div id="page-overlay"></div>
 
 <!-- ── LOGIN ──────────────────────────────────────────────────────── -->
 <div id="login-screen">
@@ -780,6 +781,13 @@ body {
           <path d="M13 8a3 3 0 1 0 0-6M17 16c0-2.8-1.8-5.2-4-5.8"/>
         </svg>
         Leads
+      </a>
+      <a class="nav-item" onclick="switchTab('contacts')" id="nav-contacts">
+        <svg class="nav-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1.5" y="3.5" width="15" height="11" rx="1.5"/>
+          <path d="M2 4.5 9 10l7-5.5"/>
+        </svg>
+        Contatos
       </a>
     </nav>
     <div class="sidebar-footer">
@@ -875,6 +883,29 @@ body {
       <div id="leads-list"><div class="loading-center"><div class="spinner"></div></div></div>
     </div>
 
+    <!-- ── CONTATOS ───────────────────────────────────────────── -->
+    <div id="tab-contacts" class="tab-content">
+      <div class="page-header">
+        <div class="page-overline">Recrutaê Admin</div>
+        <div class="page-title">Contatos</div>
+        <div class="page-subtitle">Mensagens enviadas pelo formulário "Entre em contato" do site</div>
+      </div>
+
+      <div class="leads-filters">
+        <input type="text" class="search-input" id="contact-search" placeholder="Buscar por nome, empresa, e-mail ou cargo…" oninput="filterContacts()">
+        <select class="filter-select" id="contact-status-filter" onchange="filterContacts()">
+          <option value="">Todos os status</option>
+          <option value="new">Novo</option>
+          <option value="contacted">Contactado</option>
+          <option value="converted">Convertido</option>
+          <option value="disqualified">Desqualificado</option>
+        </select>
+        <span class="leads-count" id="contacts-count"></span>
+      </div>
+
+      <div id="contacts-list"><div class="loading-center"><div class="spinner"></div></div></div>
+    </div>
+
   </main>
 </div>
 
@@ -929,6 +960,7 @@ function showApp(user) {
   document.getElementById('user-email-display').textContent = user.email;
   loadAnalytics();
   loadLeads();
+  loadContacts();
 }
 
 // ── Tab switch ────────────────────────────────────────────────────────────
@@ -1229,6 +1261,125 @@ async function updateStatus(id, newStatus) {
     const lead = allLeads.find(l => l.id === id);
     if (lead) lead.status = newStatus;
     const badge = document.querySelector(`#card-${id} .status-badge`);
+    if (badge) {
+      const labels = { new: 'Novo', contacted: 'Contactado', converted: 'Convertido', disqualified: 'Desqualificado' };
+      badge.className = `status-badge status-${newStatus}`;
+      badge.textContent = labels[newStatus] || newStatus;
+    }
+  }
+}
+
+// ── Contatos ────────────────────────────────────────────────────────────────
+let allContacts = [];
+
+async function loadContacts() {
+  const { data, error } = await sb
+    .from('contact_leads')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  const el = document.getElementById('contacts-list');
+  if (error) {
+    el.innerHTML = '<div class="loading-center" style="color:#f87171">Erro ao carregar contatos.</div>';
+    return;
+  }
+  allContacts = data || [];
+  renderContacts(allContacts);
+}
+
+function filterContacts() {
+  const q      = document.getElementById('contact-search').value.toLowerCase();
+  const status = document.getElementById('contact-status-filter').value;
+  const filtered = allContacts.filter(c => {
+    const matchQ = !q || [c.name, c.company, c.role, c.email].join(' ').toLowerCase().includes(q);
+    const matchS = !status || c.status === status;
+    return matchQ && matchS;
+  });
+  renderContacts(filtered);
+}
+
+function renderContacts(list) {
+  document.getElementById('contacts-count').textContent = `${list.length} contato${list.length !== 1 ? 's' : ''}`;
+  const el = document.getElementById('contacts-list');
+  if (!list.length) {
+    el.innerHTML = '<div class="loading-center" style="color:var(--muted)">Nenhum contato encontrado.</div>';
+    return;
+  }
+  el.innerHTML = list.map(buildContactCard).join('');
+}
+
+function buildContactCard(c) {
+  const initials = (c.name || '?').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+  const statusLabel = { new: 'Novo', contacted: 'Contactado', converted: 'Convertido', disqualified: 'Desqualificado' };
+  const waLink = c.phone ? `https://wa.me/55${c.phone.replace(/\D/g, '')}` : null;
+  const typeLabels = (c.types || []).map(t => t === 'empresa' ? 'Empresa' : t === 'candidato' ? 'Candidato' : t);
+
+  return `
+  <div class="lead-card" id="ccard-${c.id}">
+    <div class="lead-header" onclick="toggleContact('${c.id}')">
+      <div class="lead-avatar">${initials}</div>
+      <div class="lead-info">
+        <div class="lead-name">
+          ${c.name || 'Sem nome'}
+          <span class="status-badge status-${c.status || 'new'}">${statusLabel[c.status] || c.status}</span>
+        </div>
+        <div class="lead-meta">
+          ${[c.role, c.company].filter(Boolean).join(' · ') || c.email} · ${fmtDate(c.created_at)}
+        </div>
+      </div>
+      <div class="lead-right">
+        ${typeLabels.length ? `<div class="lead-count-label">${typeLabels.join(' · ')}</div>` : ''}
+      </div>
+      <svg class="lead-chevron" id="cexp-${c.id}" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <polyline points="2,5 7,10 12,5"/>
+      </svg>
+    </div>
+
+    <div class="lead-body" id="cbody-${c.id}">
+      <div class="lead-grid">
+        <div>
+          <div class="detail-label">Contato</div>
+          <div class="detail-value">
+            <strong>${c.name || '—'}</strong><br>
+            ${[c.role, c.company].filter(Boolean).join(' · ') || ''}<br>
+            <a href="mailto:${c.email}">${c.email || '—'}</a><br>
+            ${waLink ? `<a href="${waLink}" target="_blank" rel="noopener">${c.phone} ↗</a>` : (c.phone || '—')}<br>
+            ${c.country ? `<span style="color:var(--muted)">País: ${c.country}</span>` : ''}
+          </div>
+        </div>
+        <div>
+          <div class="detail-label">Status</div>
+          <select class="status-select" onchange="updateContactStatus('${c.id}', this.value)">
+            <option value="new"          ${c.status === 'new' ? 'selected' : ''}>Novo</option>
+            <option value="contacted"    ${c.status === 'contacted' ? 'selected' : ''}>Contactado</option>
+            <option value="converted"    ${c.status === 'converted' ? 'selected' : ''}>Convertido</option>
+            <option value="disqualified" ${c.status === 'disqualified' ? 'selected' : ''}>Desqualificado</option>
+          </select>
+          <div style="margin-top:12px;font-size:12px;color:var(--muted)">
+            Interesse: ${typeLabels.join(' · ') || '—'}<br>
+            Origem: ${c.source_page || '—'}<br>
+            Recebido em ${fmtDate(c.created_at)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleContact(id) {
+  const body = document.getElementById('cbody-' + id);
+  const exp  = document.getElementById('cexp-' + id);
+  const open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  exp.classList.toggle('open', !open);
+}
+
+async function updateContactStatus(id, newStatus) {
+  const { error } = await sb.from('contact_leads').update({ status: newStatus }).eq('id', id);
+  if (!error) {
+    const c = allContacts.find(x => x.id === id);
+    if (c) c.status = newStatus;
+    const badge = document.querySelector(`#ccard-${id} .status-badge`);
     if (badge) {
       const labels = { new: 'Novo', contacted: 'Contactado', converted: 'Convertido', disqualified: 'Desqualificado' };
       badge.className = `status-badge status-${newStatus}`;

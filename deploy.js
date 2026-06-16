@@ -65,6 +65,30 @@ DO $$ BEGIN
     EXECUTE 'CREATE POLICY edge_function_full_access ON candidate_searches FOR ALL USING (auth.jwt() ->> ''role'' = ''service_role'') WITH CHECK (auth.jwt() ->> ''role'' = ''service_role'')';
   END IF;
 END $$;
+
+CREATE TABLE IF NOT EXISTS contact_leads (
+  id           UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at   TIMESTAMPTZ DEFAULT NOW(),
+  name         TEXT        NOT NULL,
+  email        TEXT        NOT NULL,
+  phone        TEXT,
+  company      TEXT,
+  role         TEXT,
+  country      TEXT,
+  types        TEXT[],
+  source_page  TEXT,
+  status       TEXT DEFAULT 'new' CHECK (status IN ('new','contacted','converted','disqualified'))
+);
+CREATE INDEX IF NOT EXISTS idx_cl_created ON contact_leads (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_cl_status  ON contact_leads (status);
+ALTER TABLE contact_leads ENABLE ROW LEVEL SECURITY;
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies WHERE tablename = 'contact_leads' AND policyname = 'edge_function_full_access'
+  ) THEN
+    EXECUTE 'CREATE POLICY edge_function_full_access ON contact_leads FOR ALL USING (auth.jwt() ->> ''role'' = ''service_role'') WITH CHECK (auth.jwt() ->> ''role'' = ''service_role'')';
+  END IF;
+END $$;
 `;
 
 const sqlResp = await fetch(`${MGMT_BASE}/database/query`, {
@@ -110,27 +134,31 @@ if (secretsResp.ok || secretsResp.status === 200) {
   err(`Secrets falhou (${secretsResp.status}): ${e.slice(0, 200)}`);
 }
 
-// ── 3. Deploy da Edge Function via CLI ────────────────────────────────────
-console.log('\n③ Fazendo deploy da Edge Function...');
+// ── 3. Deploy das Edge Functions via CLI ──────────────────────────────────
+console.log('\n③ Fazendo deploy das Edge Functions...');
 
-try {
-  const result = exec(
-    `npx supabase functions deploy process-search --project-ref ${PROJECT_REF} --no-verify-jwt`,
-    {
-      cwd: __dir,
-      env: { ...process.env, SUPABASE_ACCESS_TOKEN: ACCESS_TOKEN },
-      encoding: 'utf8',
-      timeout: 120000,
+const FUNCTIONS = ['process-search', 'submit-contact'];
+
+for (const fn of FUNCTIONS) {
+  try {
+    exec(
+      `npx supabase functions deploy ${fn} --project-ref ${PROJECT_REF} --no-verify-jwt`,
+      {
+        cwd: __dir,
+        env: { ...process.env, SUPABASE_ACCESS_TOKEN: ACCESS_TOKEN },
+        encoding: 'utf8',
+        timeout: 120000,
+      }
+    );
+    ok(`Edge Function "${fn}" deployada`);
+    log(`URL: https://${PROJECT_REF}.supabase.co/functions/v1/${fn}`);
+  } catch (e) {
+    const msg = e.stdout || e.stderr || String(e);
+    if (msg.includes('Deployed Function') || msg.includes('success')) {
+      ok(`Edge Function "${fn}" deployada`);
+    } else {
+      err(`Deploy de "${fn}" falhou: ${msg.slice(0, 300)}`);
     }
-  );
-  ok('Edge Function deployada com sucesso');
-  log(`URL: https://${PROJECT_REF}.supabase.co/functions/v1/process-search`);
-} catch (e) {
-  const msg = e.stdout || e.stderr || String(e);
-  if (msg.includes('Deployed Function') || msg.includes('success')) {
-    ok('Edge Function deployada');
-  } else {
-    err(`Deploy falhou: ${msg.slice(0, 300)}`);
   }
 }
 

@@ -26,47 +26,82 @@ serve(async (req: Request) => {
   }
 
   try {
-    const { contact, audioBase64, audioMimeType, textAnswers } = await req.json();
+    const body = await req.json();
+    const contact = body.contact || {};
 
-    // ── 1. Transcrever áudio com Whisper ───────────────────────────────────
-    let transcript = "(sem resposta em vídeo)";
+    // Transcreve um áudio (base64) com Whisper. Retorna "" se não houver/falhar.
+    // deno-lint-ignore no-explicit-any
+    async function transcribe(audioBase64: any, audioMimeType: any): Promise<string> {
+      if (!audioBase64) return "";
+      try {
+        const b64 = audioBase64.includes(",") ? audioBase64.split(",")[1] : audioBase64;
+        const bin = atob(b64);
+        const buf = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
 
-    if (audioBase64) {
-      const b64 = audioBase64.includes(",") ? audioBase64.split(",")[1] : audioBase64;
-      const bin = atob(b64);
-      const buf = new Uint8Array(bin.length);
-      for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+        const ext = (audioMimeType || "").includes("ogg") ? "ogg"
+                  : (audioMimeType || "").includes("mp4") ? "mp4"
+                  : "webm";
 
-      const ext = (audioMimeType || "").includes("ogg") ? "ogg"
-                : (audioMimeType || "").includes("mp4") ? "mp4"
-                : "webm";
+        const form = new FormData();
+        form.append("file", new File([buf], `rec.${ext}`, { type: audioMimeType || "audio/webm" }));
+        form.append("model", "whisper-1");
+        form.append("language", "pt");
 
-      const form = new FormData();
-      form.append("file", new File([buf], `rec.${ext}`, { type: audioMimeType || "audio/webm" }));
-      form.append("model", "whisper-1");
-      form.append("language", "pt");
-
-      const wr = await fetch("https://api.openai.com/v1/audio/transcriptions", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${Deno.env.get("OPENAI_API_KEY")}` },
-        body: form,
-      });
-
-      if (wr.ok) {
-        const wd = await wr.json();
-        transcript = wd.text || transcript;
-      } else {
+        const wr = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${Deno.env.get("OPENAI_API_KEY")}` },
+          body: form,
+        });
+        if (wr.ok) { const wd = await wr.json(); return wd.text || ""; }
         console.warn("Whisper error:", await wr.text());
+      } catch (e) {
+        console.warn("Whisper exception:", e);
+      }
+      return "";
+    }
+
+    // ── 1. Resolver respostas (cada pergunta = vídeo OU texto) ─────────────
+    // Suporta o payload novo (body.answers por pergunta) e o antigo
+    // (body.audioBase64 único + body.textAnswers).
+    const QIDS = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"];
+    const resolved: Record<string, string> = {};
+    const modes: Record<string, string> = {};
+
+    if (body.answers && typeof body.answers === "object") {
+      for (const qid of QIDS) {
+        const a = body.answers[qid] || {};
+        const isVideo = a.mode === "video" || !!a.audioBase64;
+        modes[qid] = isVideo ? "video" : "text";
+        resolved[qid] = isVideo
+          ? await transcribe(a.audioBase64, a.audioMimeType)
+          : (a.text || "").trim();
+      }
+    } else {
+      const ta = body.textAnswers || {};
+      resolved.q1 = await transcribe(body.audioBase64, body.audioMimeType);
+      modes.q1 = body.audioBase64 ? "video" : "text";
+      for (const qid of ["q2", "q3", "q4", "q5", "q6", "q7"]) {
+        resolved[qid] = (ta[qid] || "").trim();
+        modes[qid] = "text";
       }
     }
+
+    // Transcrição principal (apresentação) — exibida no admin.
+    const videoTranscripts = QIDS
+      .filter((q) => modes[q] === "video" && resolved[q])
+      .map((q) => `[${q}] ${resolved[q]}`);
+    const transcript = resolved.q1
+      || (videoTranscripts[0] || "(sem resposta em vídeo)");
+    const textAnswers = resolved;
 
     // ── 2. Analisar com OpenAI GPT-4o ─────────────────────────────────────
     const systemPrompt = `Você é um especialista sênior em recrutamento executivo no Brasil com profundo conhecimento do mercado de trabalho brasileiro. Com base nas respostas de um gestor, crie uma job description completa e profissional, e faça uma análise real do mercado. Retorne APENAS um JSON válido sem markdown.`;
 
     const userPrompt = `=== RESPOSTAS DO GESTOR ===
 
-[Vídeo — apresentação e contexto]:
-${transcript}
+[Apresentação e contexto]:
+${textAnswers.q1 || "(não respondido)"}
 
 [Título e área]:
 ${textAnswers.q2 || "(não respondido)"}

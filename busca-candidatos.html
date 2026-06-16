@@ -3,8 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Busca de Candidatos — Recrutaê</title>
-  <meta name="description" content="Responda algumas perguntas e nossa IA mapeia os candidatos ideais para a sua vaga. 100% gratuito.">
+  <title>Plataforma de Busca de Candidatos de TI Grátis | Recrutaê</title>
+  <meta name="description" content="Mapeie o mercado e descubra candidatos ideais para suas vagas de TI e tecnologia. Nossa IA encontra os melhores perfis para você. 100% gratuito.">
+  <meta name="keywords" content="buscar candidatos, banco de currículos ti, encontrar desenvolvedores, mapeamento de mercado rh, plataforma de recrutamento, ia recrutamento">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://recrutae.com.br/busca-candidatos.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://recrutae.com.br/busca-candidatos.html">
+  <meta property="og:title" content="Plataforma de Busca de Candidatos Grátis | Recrutaê">
+  <meta property="og:description" content="Simule sua vaga e deixe nossa IA encontrar os melhores candidatos do mercado.">
+  <meta property="og:image" content="https://recrutae.com.br/assets/logos/Recrutae%20horizontal%202026.png">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://recrutae.com.br/busca-candidatos.html">
+  <meta property="twitter:title" content="Plataforma de Busca de Candidatos Grátis | Recrutaê">
+  <meta property="twitter:description" content="Simule sua vaga e deixe nossa IA encontrar os melhores candidatos do mercado.">
+  <meta property="twitter:image" content="https://recrutae.com.br/assets/logos/Recrutae%20horizontal%202026.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
@@ -19,6 +35,10 @@
     .busca-hero {
       min-height: 100vh;
       background: var(--navy);
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(107,92,231,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(107,92,231,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(31,28,75,1) 0%, var(--navy-deep) 100%);
       display: flex;
       align-items: center;
       position: relative;
@@ -30,7 +50,7 @@
       position: absolute;
       top: -180px; right: -180px;
       width: 580px; height: 580px;
-      background: radial-gradient(circle, rgba(245,185,20,.13) 0%, transparent 68%);
+      background: radial-gradient(circle, rgba(107,92,231,.13) 0%, transparent 68%);
       pointer-events: none;
     }
     .busca-hero::after {
@@ -38,7 +58,7 @@
       position: absolute;
       bottom: -100px; left: -140px;
       width: 480px; height: 480px;
-      background: radial-gradient(circle, rgba(245,185,20,.06) 0%, transparent 68%);
+      background: radial-gradient(circle, rgba(107,92,231,.06) 0%, transparent 68%);
       pointer-events: none;
     }
     .busca-hero-inner {
@@ -103,6 +123,7 @@
       border: none;
       cursor: pointer;
       transition: background .22s ease, transform .22s ease, box-shadow .22s ease;
+      border-radius: 999px;
     }
     .busca-start-btn:hover {
       background: var(--gold-dark);
@@ -412,6 +433,7 @@
       cursor: pointer;
       transition: background .22s, transform .22s, box-shadow .22s;
       letter-spacing: .01em;
+      border-radius: 999px;
     }
     .btn-wiz-next:hover {
       background: var(--gold-dark);
@@ -459,7 +481,7 @@
       overflow: hidden;
       margin-bottom: 20px;
     }
-    #videoPreview {
+    .video-wrap video {
       width: 100%; height: 100%;
       object-fit: cover;
       transform: scaleX(-1);
@@ -552,6 +574,7 @@
       border: none;
       cursor: pointer;
       transition: all .2s ease;
+      border-radius: 999px;
     }
     .btn-record:hover { background: #dc2626; transform: translateY(-1px); }
     .btn-record.recording {
@@ -572,6 +595,7 @@
       border: 1px solid rgba(245,240,232,.14);
       cursor: pointer;
       transition: all .2s;
+      border-radius: 999px;
     }
     .btn-playback:hover { border-color: rgba(245,240,232,.35); color: var(--cream); }
     .rec-badge {
@@ -694,6 +718,7 @@
       cursor: pointer;
       text-decoration: none;
       transition: background .2s, transform .2s, box-shadow .2s;
+      border-radius: 999px;
     }
     .btn-wapp:hover {
       background: #1ebe5d;
@@ -701,6 +726,46 @@
       box-shadow: 0 8px 26px rgba(37,211,102,.28);
     }
     .res-footnote { font-size: 11px; color: rgba(245,240,232,.18); margin-top: 14px; }
+
+    /* Answer mode toggle (vídeo / escrito) */
+    .answer-mode {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background: rgba(245,240,232,.04);
+      border: 1px solid rgba(245,240,232,.08);
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+    .mode-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(245,240,232,.45);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .22s, color .22s;
+      white-space: nowrap;
+    }
+    .mode-btn svg { flex-shrink: 0; }
+    .mode-btn:hover { color: var(--cream); }
+    .mode-btn.active {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .mode-panel { display: none; animation: stepIn .3s cubic-bezier(.22,1,.36,1) forwards; }
+    .mode-panel.active { display: block; }
+    .fallback-note.is-error { color: #ef4444; }
+    @media (max-width: 480px) {
+      .answer-mode { display: flex; width: 100%; }
+      .mode-btn { flex: 1; justify-content: center; padding: 10px 8px; }
+    }
 
     @media (max-width: 600px) {
       .wiz-top { padding: 14px 18px; }
@@ -711,6 +776,7 @@
   </style>
 </head>
 <body>
+  <div id="page-overlay"></div>
 
   <!-- NAVBAR -->
   <nav class="navbar transparent on-dark" id="navbar">
@@ -754,10 +820,7 @@
     <section class="busca-hero">
       <div class="hero-glow-beam" aria-hidden="true"></div>
       <div class="busca-hero-inner container">
-        <div class="busca-badge">
-          <span class="busca-badge-dot"></span>
-          Gratuito &middot; Sem compromisso
-        </div>
+
         <h1 class="busca-title">
           Quantos candidatos qualificados<br>existem para <em>a sua vaga?</em>
         </h1>
@@ -880,188 +943,7 @@
         </div>
       </div>
 
-      <!-- STEP: q1 (video) -->
-      <div class="wiz-step" id="step-q1">
-        <span class="wiz-step-accent"></span>
-        <span class="step-overline">Pergunta 1 de 7</span>
-        <h2 class="step-q">Conta pra gente: quem é você, o que a sua empresa faz e por que essa contratação importa agora?</h2>
-        <p class="step-hint">Responda em vídeo — pode ser à vontade, sem roteiro. Cerca de 1 minuto está ótimo.</p>
-
-        <div class="video-wrap">
-          <video id="videoPreview" autoplay playsinline muted></video>
-          <div class="video-perm" id="vidPerm">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="2" y="9" width="22" height="18" rx="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M24 14.5 34 9v18l-10-5.5V14.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-            <p>Clique em "Iniciar gravação" para ativar câmera e microfone.</p>
-          </div>
-          <div class="rec-ind" id="recInd">
-            <div class="rec-dot"></div>
-            <span class="rec-txt">REC</span>
-            <div class="waveform">
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-          </div>
-          <div class="rec-timer" id="recTimer">0:00</div>
-        </div>
-
-        <div class="vid-controls" id="vidControls">
-          <button class="btn-record" id="recordBtn">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" fill="currentColor"/></svg>
-            Iniciar gravação
-          </button>
-          <button class="btn-playback" id="playBtn" style="display:none">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 2.5 11 7l-7.5 4.5V2.5z" fill="currentColor"/></svg>
-            Rever
-          </button>
-          <span class="rec-badge" id="recBadge" style="display:none">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5 5 9.5 11 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Gravação salva
-          </span>
-        </div>
-        <p class="fallback-note" id="fallbackNote"></p>
-
-        <div class="wiz-actions">
-          <button class="btn-wiz-back" data-back="step-contact">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Voltar
-          </button>
-          <button class="btn-wiz-next" id="nextQ1" disabled>
-            Próxima pergunta
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="btn-wiz-skip" id="skipQ1">Pular</button>
-        </div>
-      </div>
-
-      <!-- STEP: q2 -->
-      <div class="wiz-step" id="step-q2">
-        <span class="wiz-step-accent"></span>
-        <span class="step-overline">Pergunta 2 de 7</span>
-        <h2 class="step-q">Como vocês chamam essa posição internamente? Em qual área ela se encaixa?</h2>
-        <p class="step-hint">Ex: "Analista de Dados Sênior, no time de Growth" ou "Coordenador Comercial B2B".</p>
-        <div class="wiz-field">
-          <textarea class="wiz-textarea" id="aQ2" placeholder="Descreva o título e a área da posição..."></textarea>
-          <span class="field-err" id="aQ2-err">Por favor, preencha este campo</span>
-        </div>
-        <div class="wiz-actions">
-          <button class="btn-wiz-back" data-back="step-q1">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Voltar
-          </button>
-          <button class="btn-wiz-next" data-next="step-q3" data-val="aQ2">
-            Próxima pergunta
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP: q3 -->
-      <div class="wiz-step" id="step-q3">
-        <span class="wiz-step-accent"></span>
-        <span class="step-overline">Pergunta 3 de 7</span>
-        <h2 class="step-q">Daqui 3 meses, você disse que foi a melhor contratação que fez. O que essa pessoa entregou nesse período?</h2>
-        <p class="step-hint">Pense nos projetos, processos ou resultados que você espera que ela resolva ou impulsione.</p>
-        <div class="wiz-field">
-          <textarea class="wiz-textarea" id="aQ3" placeholder="Ex: Reestruturou o processo de geração de leads, implementou o CRM e dobrou a taxa de conversão..."></textarea>
-          <span class="field-err" id="aQ3-err">Por favor, preencha este campo</span>
-        </div>
-        <div class="wiz-actions">
-          <button class="btn-wiz-back" data-back="step-q2">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Voltar
-          </button>
-          <button class="btn-wiz-next" data-next="step-q4" data-val="aQ3">
-            Próxima pergunta
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP: q4 -->
-      <div class="wiz-step" id="step-q4">
-        <span class="wiz-step-accent"></span>
-        <span class="step-overline">Pergunta 4 de 7</span>
-        <h2 class="step-q">O que é inegociável no perfil técnico? Alguma experiência ou ferramenta sem a qual não adianta nem avançar?</h2>
-        <p class="step-hint">Pode ser uma tecnologia, um segmento de mercado, uma certificação ou um tipo de experiência específica.</p>
-        <div class="wiz-field">
-          <textarea class="wiz-textarea" id="aQ4" placeholder="Ex: Precisa ter atuado em e-commerce de alto volume, com domínio de Google Analytics 4 e Meta Ads..."></textarea>
-          <span class="field-err" id="aQ4-err">Por favor, preencha este campo</span>
-        </div>
-        <div class="wiz-actions">
-          <button class="btn-wiz-back" data-back="step-q3">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Voltar
-          </button>
-          <button class="btn-wiz-next" data-next="step-q5" data-val="aQ4">
-            Próxima pergunta
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP: q5 -->
-      <div class="wiz-step" id="step-q5">
-        <span class="wiz-step-accent"></span>
-        <span class="step-overline">Pergunta 5 de 7</span>
-        <h2 class="step-q">Além do técnico: que tipo de perfil comportamental encaixa com a sua equipe e cultura?</h2>
-        <p class="step-hint">Pense em pessoas que fizeram sucesso aí — o que elas tinham em comum no jeito de trabalhar?</p>
-        <div class="wiz-field">
-          <textarea class="wiz-textarea" id="aQ5" placeholder="Ex: Autonomia e dono do negócio são inegociáveis. A cultura é de muito resultado com pouca hierarquia..."></textarea>
-          <span class="field-err" id="aQ5-err">Por favor, preencha este campo</span>
-        </div>
-        <div class="wiz-actions">
-          <button class="btn-wiz-back" data-back="step-q4">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Voltar
-          </button>
-          <button class="btn-wiz-next" data-next="step-q6" data-val="aQ5">
-            Próxima pergunta
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP: q6 -->
-      <div class="wiz-step" id="step-q6">
-        <span class="wiz-step-accent"></span>
-        <span class="step-overline">Pergunta 6 de 7</span>
-        <h2 class="step-q">Qual o formato de trabalho? Presencial, híbrido ou remoto? Tem alguma particularidade?</h2>
-        <p class="step-hint">Cidade, disponibilidade para viagens, fuso horário, regimes especiais...</p>
-        <div class="wiz-field">
-          <textarea class="wiz-textarea" id="aQ6" placeholder="Ex: Híbrido 3x por semana em São Paulo - Paulista. Eventualmente viagens mensais para filiais..."></textarea>
-          <span class="field-err" id="aQ6-err">Por favor, preencha este campo</span>
-        </div>
-        <div class="wiz-actions">
-          <button class="btn-wiz-back" data-back="step-q5">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Voltar
-          </button>
-          <button class="btn-wiz-next" data-next="step-q7" data-val="aQ6">
-            Próxima pergunta
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP: q7 -->
-      <div class="wiz-step" id="step-q7">
-        <span class="wiz-step-accent"></span>
-        <span class="step-overline">Pergunta 7 de 7 &middot; Opcional</span>
-        <h2 class="step-q">Pra fechar: tem algo sobre o setor ou a empresa que o candidato precisaria entender antes de começar?</h2>
-        <p class="step-hint">Contexto de mercado, momento da empresa, conhecimento setorial específico — o que quiser acrescentar.</p>
-        <div class="wiz-field">
-          <textarea class="wiz-textarea" id="aQ7" placeholder="(opcional) Ex: A empresa está em expansão para o mercado americano, então inglês avançado é um diferencial..."></textarea>
-        </div>
-        <div class="wiz-actions">
-          <button class="btn-wiz-back" data-back="step-q6">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Voltar
-          </button>
-          <button class="btn-wiz-next" id="submitBtn">
-            Analisar candidatos
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
+      <!-- STEPS: q1..q7 are generated by JS (each supports vídeo OU escrito) -->
 
       <!-- STEP: processing -->
       <div class="wiz-step" id="step-processing">
@@ -1108,29 +990,73 @@
   <script src="script.js?v=4"></script>
   <script>
     /* ============================================================
-       CONFIGURAÇÃO — substitua os valores abaixo:
-
-       EDGE_FUNCTION_URL: URL da sua Supabase Edge Function.
-         Formato: https://SEU-PROJECT-REF.supabase.co/functions/v1/process-search
-
-       WHATSAPP_NUMBER: número com DDI+DDD sem espaços ou símbolos.
-         Ex: 5511999998888
+       ENTREVISTA ASSÍNCRONA — cada pergunta pode ser respondida
+       por VÍDEO ou por ESCRITO (o gestor escolhe pergunta a pergunta).
     ============================================================ */
     const EDGE_FUNCTION_URL = 'https://niqouquemmtaokciaxpn.supabase.co/functions/v1/process-search';
-    const WHATSAPP_NUMBER   = '5511XXXXXXXXX';
+    const WHATSAPP_NUMBER   = '5511979796154';
+
+    /* ---- Ícones reutilizáveis ---- */
+    const IC = {
+      cam:    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M16 10l5-3v10l-5-3v-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+      pen:    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 20h4L19 9l-4-4L4 16v4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.5 6.5l4 4" stroke="currentColor" stroke-width="1.6"/></svg>',
+      camBig: '<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="2" y="9" width="22" height="18" rx="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M24 14.5 34 9v18l-10-5.5V14.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+      recDot: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" fill="currentColor"/></svg>',
+      stop:   '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="2" y="2" width="8" height="8" fill="currentColor"/></svg>',
+      play:   '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 2.5 11 7l-7.5 4.5V2.5z" fill="currentColor"/></svg>',
+      check:  '<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5 5 9.5 11 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      back:   '<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10 6.5H3M6 3 3 6.5 6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+      fwd:    '<svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8 3l4.5 4.5L8 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    };
+
+    /* ---- Perguntas ---- */
+    const QUESTIONS = [
+      { id:'q1', label:'apresentação e contexto',
+        q:'Conta pra gente: quem é você, o que a sua empresa faz e por que essa contratação importa agora?',
+        hint:'Apresente o contexto. Escolha responder gravando um vídeo (cerca de 1 minuto) ou por escrito.',
+        placeholder:'Ex: Sou head de Growth da [empresa], que atua em... Precisamos dessa contratação agora porque...',
+        required:true, defaultMode:'video' },
+      { id:'q2', label:'título e área',
+        q:'Como vocês chamam essa posição internamente? Em qual área ela se encaixa?',
+        hint:'Ex: "Analista de Dados Sênior, no time de Growth" ou "Coordenador Comercial B2B". Vídeo ou escrito.',
+        placeholder:'Descreva o título e a área da posição...',
+        required:true, defaultMode:'text' },
+      { id:'q3', label:'entregas dos 3 primeiros meses',
+        q:'Daqui 3 meses, você disse que foi a melhor contratação que fez. O que essa pessoa entregou nesse período?',
+        hint:'Pense nos projetos, processos ou resultados que você espera que ela resolva ou impulsione.',
+        placeholder:'Ex: Reestruturou o processo de geração de leads, implementou o CRM e dobrou a taxa de conversão...',
+        required:true, defaultMode:'text' },
+      { id:'q4', label:'requisitos técnicos inegociáveis',
+        q:'O que é inegociável no perfil técnico? Alguma experiência ou ferramenta sem a qual não adianta nem avançar?',
+        hint:'Pode ser uma tecnologia, um segmento de mercado, uma certificação ou um tipo de experiência específica.',
+        placeholder:'Ex: Precisa ter atuado em e-commerce de alto volume, com domínio de Google Analytics 4 e Meta Ads...',
+        required:true, defaultMode:'text' },
+      { id:'q5', label:'perfil comportamental e cultura',
+        q:'Além do técnico: que tipo de perfil comportamental encaixa com a sua equipe e cultura?',
+        hint:'Pense em pessoas que fizeram sucesso aí — o que elas tinham em comum no jeito de trabalhar?',
+        placeholder:'Ex: Autonomia e dono do negócio são inegociáveis. A cultura é de muito resultado com pouca hierarquia...',
+        required:true, defaultMode:'text' },
+      { id:'q6', label:'modelo de trabalho',
+        q:'Qual o formato de trabalho? Presencial, híbrido ou remoto? Tem alguma particularidade?',
+        hint:'Cidade, disponibilidade para viagens, fuso horário, regimes especiais...',
+        placeholder:'Ex: Híbrido 3x por semana em São Paulo - Paulista. Eventualmente viagens mensais para filiais...',
+        required:true, defaultMode:'text' },
+      { id:'q7', label:'contexto adicional',
+        q:'Pra fechar: tem algo sobre o setor ou a empresa que o candidato precisaria entender antes de começar?',
+        hint:'Contexto de mercado, momento da empresa, conhecimento setorial específico — o que quiser acrescentar.',
+        placeholder:'(opcional) Ex: A empresa está em expansão para o mercado americano, então inglês avançado é um diferencial...',
+        required:false, defaultMode:'text' },
+    ];
 
     /* ---- State ---- */
     const S = {
-      step:      'step-contact',
-      steps:     ['step-contact','step-q1','step-q2','step-q3','step-q4','step-q5','step-q6','step-q7'],
-      audioBlob: null,
-      mimeType:  'audio/webm',
-      stream:    null,
-      recorder:  null,
-      timerInt:  null,
-      secs:      0,
-      recorded:  false,
+      step:    'step-contact',
+      steps:   ['step-contact', ...QUESTIONS.map(q => 'step-' + q.id)],
+      answers: {},            // answers[id] = { mode, text, audioBlob, mimeType, recorded }
+      stream:  null,          // único stream de câmera ativo por vez
+      activeRec: null,
     };
+    QUESTIONS.forEach(q => { S.answers[q.id] = { mode: q.defaultMode, text: '', audioBlob: null, mimeType: 'audio/webm', recorded: false }; });
 
     /* ---- DOM ---- */
     const overlay   = document.getElementById('wizardOverlay');
@@ -1139,15 +1065,208 @@
     const dotsEl    = document.getElementById('wizDots');
     const lblEl     = document.getElementById('wizLbl');
     const progCtr   = document.getElementById('wizProgCenter');
-    const videoEl   = document.getElementById('videoPreview');
-    const vidPerm   = document.getElementById('vidPerm');
-    const recInd    = document.getElementById('recInd');
-    const timerEl   = document.getElementById('recTimer');
-    const recordBtn = document.getElementById('recordBtn');
-    const playBtn   = document.getElementById('playBtn');
-    const recBadge  = document.getElementById('recBadge');
-    const nextQ1    = document.getElementById('nextQ1');
-    const submitBtn = document.getElementById('submitBtn');
+    const wizBody   = document.getElementById('wizBody') || document.querySelector('.wiz-body');
+    const stepEls   = {};   // id -> element
+
+    /* ---- Build question steps ---- */
+    function buildSteps() {
+      const anchor = document.getElementById('step-processing');
+      QUESTIONS.forEach((def, idx) => {
+        const el = document.createElement('div');
+        el.className = 'wiz-step';
+        el.id = 'step-' + def.id;
+        const prevId  = idx === 0 ? 'step-contact' : 'step-' + QUESTIONS[idx - 1].id;
+        const isLast  = idx === QUESTIONS.length - 1;
+        const total   = QUESTIONS.length;
+        const overline = `Pergunta ${idx + 1} de ${total}${def.required ? '' : ' &middot; Opcional'}`;
+        el.innerHTML = `
+          <span class="wiz-step-accent"></span>
+          <span class="step-overline">${overline}</span>
+          <h2 class="step-q">${def.q}</h2>
+          <p class="step-hint">${def.hint}</p>
+
+          <div class="answer-mode" role="tablist">
+            <button type="button" class="mode-btn ${def.defaultMode === 'video' ? 'active' : ''}" data-mode="video">${IC.cam} Vídeo</button>
+            <button type="button" class="mode-btn ${def.defaultMode === 'text' ? 'active' : ''}" data-mode="text">${IC.pen} Escrito</button>
+          </div>
+
+          <div class="mode-panel mode-video ${def.defaultMode === 'video' ? 'active' : ''}">
+            <div class="video-wrap">
+              <video autoplay playsinline muted></video>
+              <div class="video-perm">${IC.camBig}<p>Clique em "Iniciar gravação" para ativar câmera e microfone.</p></div>
+              <div class="rec-ind"><div class="rec-dot"></div><span class="rec-txt">REC</span><div class="waveform"><span></span><span></span><span></span><span></span><span></span></div></div>
+              <div class="rec-timer">0:00</div>
+            </div>
+            <div class="vid-controls">
+              <button type="button" class="btn-record">${IC.recDot} Iniciar gravação</button>
+              <button type="button" class="btn-playback" style="display:none">${IC.play} Rever</button>
+              <span class="rec-badge" style="display:none">${IC.check} Gravação salva</span>
+            </div>
+            <p class="fallback-note"></p>
+          </div>
+
+          <div class="mode-panel mode-text ${def.defaultMode === 'text' ? 'active' : ''}">
+            <div class="wiz-field">
+              <textarea class="wiz-textarea" placeholder="${def.placeholder}"></textarea>
+              <span class="field-err">Por favor, preencha este campo (ou responda por vídeo).</span>
+            </div>
+          </div>
+
+          <div class="wiz-actions">
+            <button type="button" class="btn-wiz-back">${IC.back} Voltar</button>
+            <button type="button" class="btn-wiz-next">${isLast ? 'Analisar candidatos' : 'Próxima pergunta'} ${IC.fwd}</button>
+          </div>`;
+        wizBody.insertBefore(el, anchor);
+        stepEls[el.id] = el;
+        wireStep(el, def, prevId, isLast);
+      });
+    }
+
+    /* ---- Wire a single question step ---- */
+    function wireStep(el, def, prevId, isLast) {
+      const A = S.answers[def.id];
+      const modeBtns = el.querySelectorAll('.mode-btn');
+      const panelVideo = el.querySelector('.mode-video');
+      const panelText  = el.querySelector('.mode-text');
+      const ta         = el.querySelector('.wiz-textarea');
+      const fieldErr   = el.querySelector('.field-err');
+      const fallback   = el.querySelector('.fallback-note');
+
+      // video elements
+      const video     = el.querySelector('.video-wrap video');
+      const perm      = el.querySelector('.video-perm');
+      const recInd    = el.querySelector('.rec-ind');
+      const timerEl   = el.querySelector('.rec-timer');
+      const recordBtn = el.querySelector('.btn-record');
+      const playBtn   = el.querySelector('.btn-playback');
+      const badge     = el.querySelector('.rec-badge');
+
+      let recorder = null, timerInt = null, secs = 0;
+
+      const clearErr = () => { ta.classList.remove('error'); fieldErr.classList.remove('visible'); fallback.classList.remove('is-error'); fallback.textContent = ''; };
+
+      // mode toggle
+      modeBtns.forEach(btn => btn.addEventListener('click', () => {
+        const mode = btn.dataset.mode;
+        A.mode = mode;
+        modeBtns.forEach(b => b.classList.toggle('active', b === btn));
+        panelVideo.classList.toggle('active', mode === 'video');
+        panelText.classList.toggle('active', mode === 'text');
+        if (mode !== 'video') stopActiveStream();
+        clearErr();
+      }));
+
+      // textarea
+      ta.addEventListener('input', () => {
+        ta.style.height = 'auto';
+        ta.style.height = ta.scrollHeight + 'px';
+        A.text = ta.value;
+        clearErr();
+      });
+
+      // recording
+      const stop = () => {
+        if (recorder && recorder.state !== 'inactive') recorder.stop();
+        clearInterval(timerInt);
+        recInd.classList.remove('on');
+        timerEl.classList.remove('on');
+        recordBtn.innerHTML = IC.recDot + ' Gravar novamente';
+        recordBtn.classList.remove('recording');
+      };
+      A._stop = stop;
+
+      async function start() {
+        try {
+          stopActiveStream();
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 360 } },
+            audio: true,
+          });
+          S.stream = stream;
+          video.srcObject = stream;
+          video.play();
+          perm.style.display = 'none';
+
+          const audioStream = new MediaStream(stream.getAudioTracks());
+          const mimes = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
+          const mime  = mimes.find(m => MediaRecorder.isTypeSupported(m)) || '';
+          const mimeType = mime || 'audio/webm';
+
+          const chunks = [];
+          recorder = new MediaRecorder(audioStream, mime ? { mimeType: mime } : {});
+          S.activeRec = recorder;
+          recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+          recorder.onstop = () => {
+            A.audioBlob = new Blob(chunks, { type: mimeType });
+            A.mimeType  = mimeType;
+            A.recorded  = true;
+            playBtn.style.display = 'inline-flex';
+            badge.style.display   = 'inline-flex';
+            clearErr();
+          };
+          recorder.start(250);
+
+          secs = 0;
+          recInd.classList.add('on');
+          timerEl.classList.add('on');
+          timerInt = setInterval(() => {
+            secs++;
+            const m = Math.floor(secs / 60), s = secs % 60;
+            timerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+            if (secs >= 120) stop();
+          }, 1000);
+
+          recordBtn.innerHTML = IC.stop + ' Parar gravação';
+          recordBtn.classList.add('recording');
+        } catch (err) {
+          console.warn('Mídia:', err);
+          fallback.textContent = 'Câmera/microfone indisponível. Use a opção "Escrito" para responder.';
+          fallback.classList.add('is-error');
+        }
+      }
+
+      recordBtn.addEventListener('click', () => {
+        if (recorder && recorder.state === 'recording') stop();
+        else start();
+      });
+      playBtn.addEventListener('click', () => {
+        if (!A.audioBlob) return;
+        const url = URL.createObjectURL(A.audioBlob);
+        const a = new Audio(url);
+        a.play();
+        a.onended = () => URL.revokeObjectURL(url);
+      });
+
+      // nav
+      el.querySelector('.btn-wiz-back').addEventListener('click', () => { stopActiveStream(); show(prevId); });
+      el.querySelector('.btn-wiz-next').addEventListener('click', () => {
+        if (!validateAnswer(def, { ta, fieldErr, fallback })) return;
+        stopActiveStream();
+        if (isLast) handleSubmit();
+        else show('step-' + QUESTIONS[QUESTIONS.indexOf(def) + 1].id);
+      });
+    }
+
+    function validateAnswer(def, { ta, fieldErr, fallback }) {
+      const A = S.answers[def.id];
+      if (!def.required) return true;
+      if (A.mode === 'video') {
+        if (A.recorded) return true;
+        fallback.textContent = 'Grave um vídeo para continuar — ou troque para "Escrito".';
+        fallback.classList.add('is-error');
+        return false;
+      }
+      if ((A.text || ta.value || '').trim().length >= 12) return true;
+      ta.classList.add('error');
+      fieldErr.classList.add('visible');
+      return false;
+    }
+
+    function stopActiveStream() {
+      if (S.activeRec && S.activeRec.state === 'recording') { try { S.activeRec.stop(); } catch (e) {} }
+      if (S.stream) { S.stream.getTracks().forEach(t => t.stop()); S.stream = null; }
+      S.activeRec = null;
+    }
 
     /* ---- Progress dots ---- */
     function buildDots() {
@@ -1180,35 +1299,25 @@
       if (S.step === 'step-processing') return;
       overlay.classList.remove('active');
       document.body.style.overflow = '';
-      stopStream();
+      stopActiveStream();
     }
 
     /* ---- Show step ---- */
     function show(id) {
+      stopActiveStream();
       document.querySelectorAll('.wiz-step').forEach(s => s.classList.remove('active'));
       const el = document.getElementById(id);
       if (!el) return;
       el.classList.add('active');
       S.step = id;
+      wizBody.scrollTop = 0;
       updateDots();
       const hide = ['step-processing','step-results'].includes(id);
       progCtr.style.visibility = hide ? 'hidden' : 'visible';
       closeBtn.style.visibility = id === 'step-processing' ? 'hidden' : 'visible';
     }
 
-    /* ---- Generic data-* nav ---- */
-    document.querySelectorAll('[data-next]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const valId = btn.dataset.val;
-        if (valId && !valTA(valId)) return;
-        show(btn.dataset.next);
-      });
-    });
-    document.querySelectorAll('[data-back]').forEach(btn => {
-      btn.addEventListener('click', () => show(btn.dataset.back));
-    });
-
-    /* ---- Contact validation ---- */
+    /* ---- Contact step ---- */
     document.getElementById('nextContact').addEventListener('click', () => {
       if (valContact()) show('step-q1');
     });
@@ -1230,106 +1339,23 @@
       });
       return ok;
     }
-    function valTA(id) {
-      const el  = document.getElementById(id);
-      const err = document.getElementById(id + '-err');
-      const ok  = el && el.value.trim().length >= 12;
-      if (el)  el.classList.toggle('error', !ok);
-      if (err) err.classList.toggle('visible', !ok);
-      return ok;
-    }
-
-    /* ---- Q1 nav ---- */
-    document.getElementById('skipQ1').addEventListener('click', () => { stopStream(); show('step-q2'); });
-    nextQ1.addEventListener('click', () => { stopStream(); show('step-q2'); });
-
-    /* ---- Video recording ---- */
-    async function startRec() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 360 } },
-          audio: true
-        });
-        S.stream = stream;
-        videoEl.srcObject = stream;
-        videoEl.play();
-        vidPerm.style.display = 'none';
-
-        const audioStream = new MediaStream(stream.getAudioTracks());
-        const mimes = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
-        const mime  = mimes.find(m => MediaRecorder.isTypeSupported(m)) || '';
-        S.mimeType  = mime || 'audio/webm';
-
-        const chunks = [];
-        const rec = new MediaRecorder(audioStream, mime ? { mimeType: mime } : {});
-        S.recorder = rec;
-        rec.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-        rec.onstop = () => {
-          S.audioBlob = new Blob(chunks, { type: S.mimeType });
-          S.recorded  = true;
-          playBtn.style.display   = 'inline-flex';
-          recBadge.style.display  = 'inline-flex';
-          nextQ1.disabled         = false;
-        };
-        rec.start(250);
-
-        S.secs = 0;
-        recInd.classList.add('on');
-        timerEl.classList.add('on');
-        S.timerInt = setInterval(() => {
-          S.secs++;
-          const m = Math.floor(S.secs / 60);
-          const s = S.secs % 60;
-          timerEl.textContent = `${m}:${s.toString().padStart(2,'0')}`;
-          if (S.secs >= 120) stopRec();
-        }, 1000);
-
-        recordBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="2" y="2" width="8" height="8" fill="currentColor"/></svg> Parar gravação`;
-        recordBtn.classList.add('recording');
-
-      } catch (err) {
-        console.warn('Mídia:', err);
-        document.getElementById('fallbackNote').textContent =
-          'Gravação não disponível neste navegador. Clique em "Pular" e continue pelas perguntas escritas.';
-        nextQ1.disabled = false;
-      }
-    }
-
-    function stopRec() {
-      if (S.recorder && S.recorder.state !== 'inactive') S.recorder.stop();
-      clearInterval(S.timerInt);
-      recInd.classList.remove('on');
-      timerEl.classList.remove('on');
-      recordBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" fill="currentColor"/></svg> Gravar novamente`;
-      recordBtn.classList.remove('recording');
-    }
-
-    function stopStream() {
-      if (S.stream) { S.stream.getTracks().forEach(t => t.stop()); S.stream = null; }
-      clearInterval(S.timerInt);
-    }
-
-    recordBtn.addEventListener('click', () => {
-      if (S.recorder && S.recorder.state === 'recording') stopRec();
-      else startRec();
-    });
-
-    playBtn.addEventListener('click', () => {
-      if (!S.audioBlob) return;
-      const url = URL.createObjectURL(S.audioBlob);
-      const a = new Audio(url);
-      a.play();
-      a.onended = () => URL.revokeObjectURL(url);
-    });
 
     /* ---- Submit ---- */
-    submitBtn.addEventListener('click', handleSubmit);
+    function blobToDataURL(blob) {
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = () => res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(blob);
+      });
+    }
 
     async function handleSubmit() {
       show('step-processing');
       const msgs = [
-        'Transcrevendo sua resposta em vídeo...',
-        'Analisando o perfil da posição com IA...',
+        'Processando suas respostas...',
+        'Transcrevendo os vídeos com IA...',
+        'Analisando o perfil da posição...',
         'Mapeando candidatos na nossa base...',
         'Montando o job description...',
         'Quase pronto...',
@@ -1349,30 +1375,27 @@
         email:   document.getElementById('cEmail').value.trim(),
         phone:   document.getElementById('cPhone').value.trim(),
       };
-      const textAnswers = {
-        q2: document.getElementById('aQ2').value.trim(),
-        q3: document.getElementById('aQ3').value.trim(),
-        q4: document.getElementById('aQ4').value.trim(),
-        q5: document.getElementById('aQ5').value.trim(),
-        q6: document.getElementById('aQ6').value.trim(),
-        q7: document.getElementById('aQ7').value.trim(),
-      };
 
-      let audioBase64 = null;
-      if (S.audioBlob) {
-        audioBase64 = await new Promise((res, rej) => {
-          const r = new FileReader();
-          r.onload = () => res(r.result);
-          r.onerror = rej;
-          r.readAsDataURL(S.audioBlob);
-        });
+      // Monta o payload por pergunta (vídeo OU texto)
+      const answers = {};
+      for (const def of QUESTIONS) {
+        const A = S.answers[def.id];
+        if (A.mode === 'video' && A.audioBlob) {
+          answers[def.id] = {
+            mode: 'video',
+            audioBase64: await blobToDataURL(A.audioBlob),
+            audioMimeType: A.mimeType,
+          };
+        } else {
+          answers[def.id] = { mode: 'text', text: (A.text || '').trim() };
+        }
       }
 
       try {
         const resp = await fetch(EDGE_FUNCTION_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contact, audioBase64, audioMimeType: S.mimeType, textAnswers }),
+          body: JSON.stringify({ contact, answers }),
         });
         clearInterval(msgInt);
         const data = resp.ok ? await resp.json() : { success: false };
@@ -1412,10 +1435,8 @@
       requestAnimationFrame(frame);
     }
 
-    /* ---- Textarea auto-resize ---- */
-    document.querySelectorAll('.wiz-textarea').forEach(ta => {
-      ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; });
-    });
+    /* ---- Init ---- */
+    buildSteps();
   </script>
 </body>
 </html>
