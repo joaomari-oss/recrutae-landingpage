@@ -1,0 +1,6 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/admin-login", "destination": "/painel-recrutae-privado-v4.html" }
+  ]
+}
